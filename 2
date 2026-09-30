@@ -1,0 +1,21 @@
+আমার [সাইটের নাম] এর জন্য Firebase দিয়ে একটা admin dashboard বানাতে হবে।
+সঙ্গে আমার আরেকটা সাইটের কাজ করা admin/index.html দিলাম, এটাকে রেফারেন্স হিসেবে নাও।
+
+যা লাগবে:
+1. Firebase Authentication (Email/Password) দিয়ে লগইন
+2. দুই ধরনের অ্যাডমিন:
+   - Super Admin: সব কিছু দেখতে পারবে, নতুন admin বানাতে, বন্ধ করতে, মুছতে
+     ও পাসওয়ার্ড রিসেট করতে পারবে
+   - Client Admin: শুধু যে পারমিশন দেওয়া হয়েছে সেগুলো দেখতে পারবে
+3. Firestore-এ adminUsers কালেকশন, Document ID = ইউজারের UID
+   ফিল্ড: name, username, email, role (super_admin / admin), active, permissions (array)
+4. Super Admin নতুন admin বানালে সে যেন লগআউট না হয়
+   (secondary Firebase app ব্যবহার করো)
+5. Firestore Rules: adminUsers অংশ আগের মতো, আর ক্লায়েন্টের পারমিশন
+   rules-এও যেন চেক হয়
+6. লগইন ব্যর্থ হলে error code দেখাবে, যেমন (auth/invalid-credential)
+
+আমার এই সাইটের ডেটা: [যেমন: orders, bookings, products...]
+ড্যাশবোর্ডে এই পেজগুলো চাই: [তালিকা]
+
+বাংলায় সহজ করে ধাপে ধাপে বুঝিয়ে দাও।
