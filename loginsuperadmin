@@ -1,0 +1,68 @@
+# নতুন সাইটে Firebase অ্যাডমিন সিস্টেম বসানোর চেকলিস্ট
+
+নিয়ম: **প্রতিটা সাইটের জন্য আলাদা Firebase প্রজেক্ট।**
+
+## ১. Firebase প্রজেক্ট
+- [ ] Firebase Console → Add project
+- [ ] Authentication → Sign-in method → **Email/Password** চালু
+- [ ] Firestore Database তৈরি
+- [ ] Project settings → Your apps → **Web app** যোগ করে `firebaseConfig` কপি
+
+## ২. কোড
+- [ ] `admin/index.html` কপি করুন
+- [ ] শুধু `firebaseConfig` অংশটা নতুন প্রজেক্টের config দিয়ে বদলান
+- [ ] **কপি-পেস্ট করুন, হাতে টাইপ করবেন না** (একটা হাইফেন বাদ পড়ায় `api-key-not-valid` error এসেছিল)
+- [ ] `logo.png` আর `favicon.png` `admin` ফোল্ডারের **এক ধাপ উপরে** রাখুন
+- [ ] সার্ভারে আপলোড করে cache পরিষ্কার করুন
+
+## ৩. প্রথম সুপার অ্যাডমিন
+- [ ] Authentication → Users → **Add user** (ইমেইল + পাসওয়ার্ড)
+- [ ] ইউজারের **User UID** কপি করুন
+- [ ] Firestore → **Start collection** → Collection ID: `adminUsers` (হুবহু এই বানান)
+- [ ] **Document ID = ওই UID** (Auto-ID চাপবেন না)
+- [ ] ফিল্ড:
+
+| Field | Type | Value |
+|---|---|---|
+| `name` | string | আপনার নাম |
+| `username` | string | `superadmin` |
+| `email` | string | লগইনের ইমেইল |
+| `role` | string | `super_admin` |
+| `active` | boolean | `true` |
+
+> নামটা `name` ফিল্ডের **value** হবে, ফিল্ডের নাম নয়।
+
+## ৪. Firestore Rules
+- [ ] `match /databases/{database}/documents { ... }` এর **ভেতরে** `isAdmin()` ও `isSuperAdmin()` ফাংশন এবং `adminUsers` সহ বাকি `match` ব্লক বসান
+- [ ] **Publish** চাপুন
+- [ ] আগের rules মুছে ফেলবেন না, আগে কপি করে রাখুন
+
+## ৫. ডোমেইন ও নিরাপত্তা
+- [ ] Authentication → Settings → **Authorized domains** এ সাইটের ডোমেইন যোগ
+- [ ] Google Cloud → APIs & Services → Credentials → **Browser key**
+  - API restrictions এ **Identity Toolkit API** আর **Token Service API** আছে কিনা দেখুন
+  - Application restrictions → **Websites** → `ডোমেইন/*` এবং `*.ডোমেইন/*`
+- [ ] Google Cloud-এ **ঠিক প্রজেক্ট** সিলেক্ট আছে কিনা দেখুন (ভুল প্রজেক্টে গিয়ে আটকে ছিলাম)
+
+## ৬. পরীক্ষা
+- [ ] Incognito উইন্ডোতে অ্যাডমিন পেজ খুলে লগইন
+- [ ] Ctrl + U → `apiKey` ঠিক আছে কিনা দেখুন
+
+## ক্লায়েন্ট অ্যাডমিন বানানো
+1. সুপার অ্যাডমিনে লগইন → **Admin Management** → **+ Add admin**
+2. Role: **Client Admin**
+3. শুধু প্রয়োজনীয় Permissions-এ টিক (Admin Management কখনো নয়)
+4. ক্লায়েন্টকে পাঠান: অ্যাডমিন লিংক, ইমেইল, অস্থায়ী পাসওয়ার্ড
+
+## Error ও সমাধান
+
+| Error | মানে | সমাধান |
+|---|---|---|
+| `auth/api-key-not-valid` | key ভুল বা ভুল প্রজেক্ট | config আবার কপি করুন, সার্ভারে পুরনো ফাইল আছে কিনা দেখুন |
+| `auth/invalid-credential` | ইমেইল বা পাসওয়ার্ড ভুল | Authentication → Users থেকে পাসওয়ার্ড রিসেট |
+| not registered as a DigiSER administrator | `adminUsers` ডকুমেন্টের ID আর UID মেলেনি | UID দিয়ে নতুন ডকুমেন্ট বানান |
+| `permission-denied` | Firestore Rules সমস্যা | Rules Publish হয়েছে কিনা দেখুন |
+
+## মনে রাখার বিষয়
+- Applicants, Payments, CV পেজ কালেকশনের নামের ওপর নির্ভর করে (`applicantProfiles`, `applications`, `payments`, `clientUpdates`)। অন্য সাইটের ডেটা আলাদা হলে এগুলো বদলাতে হবে।
+- ক্লায়েন্টের পারমিশন এখন শুধু পেজের কোডে আটকানো। সত্যিকারের সুরক্ষার জন্য Firestore Rules-এও পারমিশন চেক যোগ করতে হবে।
