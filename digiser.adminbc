@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DigiSER Admin — Control Center</title>
+<link rel="icon" href="../favicon.png">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--b:#0087c4;--bd:#006b9d;--bs:#eaf8ff;--g:#18a56b;--r:#d64545;--o:#e99a28;--bg:#f4f8fa;--t:#12242d;--m:#71818a;--br:#dce7ec}
+body{min-height:100vh;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--t)}
+button,input,select{font:inherit}button{cursor:pointer}
+.hidden{display:none!important}
+#login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(circle at 15% 20%,rgba(0,135,196,.12),transparent 35%),#f4f9fb}
+.card{width:100%;max-width:420px;background:#fff;border-radius:24px;padding:36px;box-shadow:0 30px 90px rgba(0,70,100,.13)}
+.card img{display:block;width:58px;height:58px;object-fit:contain;margin:0 auto 18px}
+.card h2{font-size:28px;text-align:center;letter-spacing:-1px}
+.card .sub{color:var(--m);font-size:13px;text-align:center;margin:6px 0 26px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:12px;font-weight:700;margin-bottom:7px}
+.field input,.field select{width:100%;height:48px;border:1px solid var(--br);border-radius:12px;padding:0 14px;background:#fbfdfe;outline:none}
+.field input:focus,.field select:focus{border-color:var(--b);box-shadow:0 0 0 4px rgba(0,135,196,.1)}
+.btn{border:0;border-radius:12px;padding:0 18px;height:46px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--b),var(--bd))}
+.btn.full{width:100%;height:50px}
+.btn.ghost{background:#fff;color:#53656e;border:1px solid var(--br)}
+.err{display:none;margin-top:14px;padding:12px;border-radius:12px;background:#fff1f1;border:1px solid #ffd6d6;color:#b42c2c;font-size:12px;line-height:1.5;word-break:break-word}
+.note{margin-top:16px;text-align:center;font-size:11px;color:#94a1a8}
+#app{min-height:100vh;display:grid;grid-template-columns:240px 1fr}
+aside{position:fixed;inset:0 auto 0 0;width:240px;background:#071b25;color:#fff;padding:20px 14px;display:flex;flex-direction:column;z-index:20}
+.brand{display:flex;align-items:center;gap:10px;padding:4px 8px 24px}
+.brand img{width:38px;height:38px;object-fit:contain;background:#fff;padding:5px;border-radius:10px}
+.brand b{display:block;font-size:14px}.brand small{color:#78909a;font-size:10px}
+nav{display:grid;gap:4px}
+nav button{border:0;background:none;color:#9db1b9;text-align:left;padding:11px 12px;border-radius:10px;font-size:13px;font-weight:600}
+nav button:hover,nav button.on{background:rgba(0,135,196,.2);color:#fff}
+.me{margin-top:auto;padding:12px;border-radius:12px;background:rgba(255,255,255,.05);font-size:12px}
+.me span{display:block;color:#6f8994;font-size:10px;margin:3px 0 10px}
+.me button{width:100%;padding:9px;border-radius:9px;border:1px solid rgba(255,255,255,.1);background:none;color:#9db1b9}
+main{grid-column:2;min-width:0;padding:28px 30px}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:22px}
+.head h1{font-size:26px;letter-spacing:-1px}.head p{color:var(--m);font-size:12px;margin-top:4px}
+.pill{padding:7px 12px;border-radius:999px;background:var(--bs);color:var(--b);font-size:11px;font-weight:700}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.stat{background:#fff;border:1px solid var(--br);border-radius:16px;padding:18px}
+.stat small{color:var(--m);font-size:11px;font-weight:600}.stat b{display:block;font-size:28px;margin-top:8px}
+.panel{background:#fff;border:1px solid var(--br);border-radius:16px;overflow:hidden}
+.tw{overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:620px}
+th{text-align:left;font-size:11px;color:#82919a;padding:12px;background:#f8fbfc;border-bottom:1px solid var(--br)}
+td{padding:12px;border-bottom:1px solid #edf2f4;font-size:12px}
+tr:last-child td{border-bottom:0}
+.empty{padding:40px 20px;text-align:center;color:#8b9aa2;font-size:12px}
+.bd{display:inline-block;padding:4px 9px;border-radius:999px;font-size:10px;font-weight:700}
+.bd.g{background:#eafaf3;color:#16885b}.bd.r{background:#fff0f0;color:#c33b3b}.bd.b{background:#eaf8ff;color:#0074a9}.bd.o{background:#fff6e8;color:#b97917}
+.mini{border:1px solid var(--br);background:#fff;color:#536770;border-radius:8px;padding:6px 10px;font-size:11px;font-weight:600;margin-right:4px}
+.mini.d{color:var(--r)}
+.note2{padding:14px 16px;border-radius:12px;background:#fff9eb;border:1px solid #f5e1af;color:#806221;font-size:12px;line-height:1.6;margin-bottom:18px}
+dialog{border:0;border-radius:18px;width:min(560px,92vw);padding:0;box-shadow:0 30px 100px rgba(0,0,0,.25)}
+dialog::backdrop{background:rgba(5,20,28,.55)}
+dialog form{padding:22px}
+dialog h3{margin-bottom:16px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.full{grid-column:1/-1}
+.perms{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.perms label{display:flex;gap:8px;align-items:center;border:1px solid var(--br);border-radius:10px;padding:9px;font-size:12px}
+.foot{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+@media(max-width:800px){
+#app{grid-template-columns:1fr}
+aside{position:static;width:auto;flex-direction:column}
+main{grid-column:1;padding:20px 14px}
+.stats{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<section id="login">
+  <form class="card" id="loginForm">
+    <img src="../logo.png" alt="DigiSER">
+    <h2>Welcome back</h2>
+    <p class="sub">Sign in to your DigiSER administration account.</p>
+    <div class="field"><label>Admin email</label><input id="email" type="email" autocomplete="username" required></div>
+    <div class="field"><label>Password</label><input id="pass" type="password" autocomplete="current-password" required></div>
+    <button class="btn full" type="submit">Sign in to Dashboard</button>
+    <div class="err" id="err"></div>
+    <p class="note">Access is controlled through Firebase Authentication and administrator roles.</p>
+  </form>
+</section>
+
+<div id="app" class="hidden">
+  <aside>
+    <div class="brand"><img src="../logo.png" alt=""><div><b>DigiSER Admin</b><small>Control Center</small></div></div>
+    <nav id="nav"></nav>
+    <div class="me"><b id="meName">Admin</b><span id="meRole"></span><button id="out">Sign out</button></div>
+  </aside>
+  <main>
+    <div class="head"><div><h1 id="title">Dashboard</h1><p>DigiSER BD administration</p></div><div class="pill" id="role"></div></div>
+    <div id="view"></div>
+  </main>
+</div>
+
+<dialog id="dlg">
+  <form id="adminForm">
+    <h3>Create new admin</h3>
+    <div class="grid2">
+      <div class="field"><label>Name</label><input id="aName" required></div>
+      <div class="field"><label>Admin ID</label><input id="aUser" required></div>
+      <div class="field full"><label>Email</label><input id="aEmail" type="email" required></div>
+      <div class="field"><label>Temporary password</label><input id="aPass" type="password" minlength="6" required></div>
+      <div class="field"><label>Role</label><select id="aRole"><option value="admin">Client Admin</option><option value="super_admin">Super Admin</option></select></div>
+      <div class="field full"><label>Permissions</label><div class="perms" id="perms"></div></div>
+    </div>
+    <div class="foot"><button type="button" class="btn ghost" id="cancel">Cancel</button><button class="btn" id="create" type="submit">Create admin</button></div>
+  </form>
+</dialog>
+
+<script type="module">
+import {initializeApp,getApps,getApp} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+import {getAuth,signInWithEmailAndPassword,onAuthStateChanged,signOut,sendPasswordResetEmail,createUserWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+import {getFirestore,collection,doc,getDoc,getDocs,setDoc,updateDoc,deleteDoc,serverTimestamp} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCAc-am544-kM_qxSB6vn61Uk-8N_jpq2s",
+  authDomain: "digiserbds.firebaseapp.com",
+  projectId: "digiserbds",
+  storageBucket: "digiserbds.firebasestorage.app",
+  messagingSenderId: "543059824242",
+  appId: "1:543059824242:web:71cf0227ecddf2f840fceb",
+  measurementId: "G-NX8RD20E7S"
+};
+
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const ADMINS = "adminUsers";
+const $ = id => document.getElementById(id);
+const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+
+const LABELS = {applicants:"Applicants",applications:"Applications",payments:"Payments",cvs:"CV Manager",updates:"System Updates",admins:"Admin Management"};
+let user = null, me = null, page = "dashboard";
+
+const isSuper = () => me?.role === "super_admin";
+const can = p => p === "dashboard" || isSuper() || (me?.permissions || []).includes(p);
+
+function showErr(m){ const e = $("err"); e.textContent = m; e.style.display = "block"; }
+function hideErr(){ $("err").style.display = "none"; }
+
+/* ---------- login ---------- */
+$("loginForm").addEventListener("submit", async e => {
+  e.preventDefault(); hideErr();
+  try {
+    await signInWithEmailAndPassword(auth, $("email").value.trim(), $("pass").value);
+  } catch (err) {
+    console.error(err);
+    showErr("Login failed (" + (err.code || "unknown") + ")");
+  }
+});
+
+onAuthStateChanged(auth, async u => {
+  if (!u) { user = me = null; $("login").classList.remove("hidden"); $("app").classList.add("hidden"); return; }
+  user = u;
+  try {
+    const snap = await getDoc(doc(db, ADMINS, u.uid));
+    if (!snap.exists()) { await signOut(auth); showErr("This account is signed in but is not registered as a DigiSER administrator."); return; }
+    me = {uid: u.uid, ...snap.data()};
+    if (me.active === false) { await signOut(auth); showErr("This administrator account is inactive."); return; }
+    $("login").classList.add("hidden"); $("app").classList.remove("hidden");
+    const role = isSuper() ? "SUPER ADMIN" : "CLIENT ADMIN";
+    $("meName").textContent = me.name || me.username || u.email;
+    $("meRole").textContent = role; $("role").textContent = role;
+    buildNav(); go("dashboard");
+  } catch (err) {
+    console.error(err);
+    showErr("Unable to load administrator profile (" + (err.code || "unknown") + ")");
+  }
+});
+
+$("out").addEventListener("click", () => signOut(auth));
+
+/* ---------- navigation ---------- */
+function buildNav(){
+  const items = [["dashboard","◈ Dashboard"],["admins","◎ Admin Management"],["applicants","◉ Applicants"],["applications","✓ Applications"],["payments","৳ Payments"],["cvs","▣ CV Manager"],["updates","✦ System Updates"]];
+  $("nav").innerHTML = items.filter(([k]) => can(k)).map(([k,l]) => `<button data-p="${k}">${l}</button>`).join("");
+  $("nav").onclick = e => { const b = e.target.closest("button"); if (b) go(b.dataset.p); };
+}
+
+async function go(p){
+  if (!can(p)) return;
+  page = p;
+  document.querySelectorAll("#nav button").forEach(b => b.classList.toggle("on", b.dataset.p === p));
+  $("title").textContent = p === "dashboard" ? "Dashboard" : LABELS[p];
+  $("view").innerHTML = '<div class="panel"><div class="empty">Loading...</div></div>';
+  try { await render[p](); }
+  catch (err) { console.error(err); $("view").innerHTML = `<div class="panel"><div class="empty">Unable to load data (${esc(err.code || "error")}). Check Firestore rules.</div></div>`; }
+}
+
+/* ---------- helpers ---------- */
+const list = async c => (await getDocs(collection(db, c))).docs.map(x => ({_id: x.id, ...x.data()}));
+const badge = (t, c) => `<span class="bd ${c}">${esc(t)}</span>`;
+const table = (head, rows) => !rows.length
+  ? '<div class="panel"><div class="empty">No records found.</div></div>'
+  : `<div class="panel"><div class="tw"><table><thead><tr>${head.map(h => `<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div></div>`;
+
+/* ---------- pages ---------- */
+const render = {
+  async dashboard(){
+    const [a, b, c] = await Promise.all([list("applicantProfiles"), list("applications"), list("payments")]);
+    const adm = isSuper() ? (await list(ADMINS)).length : "-";
+    $("view").innerHTML = `<div class="stats">
+      <div class="stat"><small>Applicants</small><b style="color:var(--b)">${a.length}</b></div>
+      <div class="stat"><small>Applications</small><b style="color:var(--g)">${b.length}</b></div>
+      <div class="stat"><small>Payments</small><b style="color:var(--o)">${c.length}</b></div>
+      <div class="stat"><small>Admins</small><b style="color:var(--r)">${adm}</b></div></div>`;
+  },
+
+  async admins(){
+    if (!isSuper()) { $("view").innerHTML = '<div class="empty">Access denied.</div>'; return; }
+    const rows = (await list(ADMINS)).map(a => [
+      `<b>${esc(a.name)}</b>`, esc(a.username), esc(a.email),
+      a.role === "super_admin" ? badge("SUPER ADMIN","b") : badge("ADMIN","o"),
+      a.active === false ? badge("INACTIVE","r") : badge("ACTIVE","g"),
+      a.role === "super_admin" ? "Full access" : esc((a.permissions || []).map(p => LABELS[p] || p).join(", ") || "None"),
+      a._id === user.uid ? badge("YOU","g") :
+        `<button class="mini" data-act="toggle" data-id="${esc(a._id)}" data-on="${a.active !== false}">${a.active === false ? "Activate" : "Deactivate"}</button>` +
+        `<button class="mini" data-act="reset" data-email="${esc(a.email)}">Reset password</button>` +
+        `<button class="mini d" data-act="remove" data-id="${esc(a._id)}">Remove</button>`
+    ]);
+    $("view").innerHTML = `<div class="head" style="margin-bottom:14px"><div class="note2" style="margin:0;flex:1">Only Super Admins can create or deactivate administrators.</div><button class="btn" id="addAdmin">+ Add admin</button></div>` +
+      table(["Name","Admin ID","Email","Role","Status","Permissions","Actions"], rows);
+    $("addAdmin").onclick = () => $("dlg").showModal();
+  },
+
+  async applicants(){
+    const d = await list("applicantProfiles");
+    $("view").innerHTML = table(["Name","Mobile","Email","Skills"], d.map(x => [`<b>${esc(x.name)}</b>`, esc(x.mobile), esc(x.email), esc(x.skills)]));
+  },
+
+  async applications(){
+    const d = await list("applications");
+    $("view").innerHTML = table(["Application ID","Job","Status","Payment"], d.map(x => [
+      `<b>${esc(x.id || x._id)}</b>`, esc(x.jobTitle), badge(x.status ?? "-","b"), badge(x.paymentStatus ?? "-", x.paymentStatus === "paid" ? "g" : "o")]));
+  },
+
+  async payments(){
+    const d = await list("payments");
+    $("view").innerHTML = table(["Application","Method","Amount","Transaction","Status"], d.map(x => [
+      esc(x.applicationId), esc(x.method), esc(x.amount) + " " + esc(x.currency || "BDT"), esc(x.trxId || "-"),
+      badge(x.status ?? "-", x.status === "paid" ? "g" : x.status === "failed" ? "r" : "o")]));
+  },
+
+  async cvs(){
+    const d = (await list("applicantProfiles")).filter(x => x.cvUrl || x.cv?.dataUrl);
+    $("view").innerHTML = table(["Applicant","Mobile","CV","Action"], d.map(x => [
+      esc(x.name), esc(x.mobile), esc(x.cv?.name || "Uploaded CV"),
+      x.cvUrl ? `<a class="mini" href="${esc(x.cvUrl)}" target="_blank" rel="noopener">View CV</a>` : badge("Local file","o")]));
+  },
+
+  async updates(){
+    const d = await list("clientUpdates");
+    $("view").innerHTML = `<div class="head" style="margin-bottom:14px"><span></span><button class="btn" id="addUpd">+ New update</button></div>` +
+      table(["Title","Category","Status","Published"], d.map(x => [
+        `<b>${esc(x.title)}</b><br><small style="color:#8a999f">${esc(x.description)}</small>`, esc(x.category), badge(x.status ?? "-","b"), x.published ? badge("YES","g") : badge("NO","r")]));
+    $("addUpd").onclick = addUpdate;
+  }
+};
+
+/* ---------- admin actions ---------- */
+$("view").addEventListener("click", async e => {
+  const b = e.target.closest("[data-act]"); if (!b || !isSuper()) return;
+  const {act, id, email, on} = b.dataset;
+  try {
+    if (act === "toggle") await updateDoc(doc(db, ADMINS, id), {active: on !== "true", updatedAt: serverTimestamp(), updatedBy: user.uid});
+    if (act === "reset" && confirm("Send password reset email to " + email + "?")) { await sendPasswordResetEmail(auth, email); alert("Password reset email sent."); return; }
+    if (act === "remove") { if (!confirm("Remove this administrator from DigiSER?")) return; await deleteDoc(doc(db, ADMINS, id)); }
+    go("admins");
+  } catch (err) { console.error(err); alert("Action failed (" + (err.code || "error") + ")"); }
+});
+
+$("perms").innerHTML = Object.entries(LABELS).map(([k,l]) => `<label><input type="checkbox" value="${k}" ${k==="applicants"||k==="applications"?"checked":""}> ${l}</label>`).join("");
+$("cancel").onclick = () => $("dlg").close();
+
+$("adminForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  if (!isSuper()) return;
+  const btn = $("create"); btn.disabled = true; btn.textContent = "Creating...";
+  const role = $("aRole").value;
+  const perms = [...document.querySelectorAll("#perms input:checked")].map(i => i.value);
+  try {
+    // A secondary app keeps the Super Admin signed in while the new account is created.
+    const name = "DigiSERSecondaryAuth";
+    const sec = getApps().find(a => a.name === name) || initializeApp(firebaseConfig, name);
+    const secAuth = getAuth(sec);
+    const cred = await createUserWithEmailAndPassword(secAuth, $("aEmail").value.trim().toLowerCase(), $("aPass").value);
+    await setDoc(doc(db, ADMINS, cred.user.uid), {
+      uid: cred.user.uid, name: $("aName").value.trim(), username: $("aUser").value.trim().toLowerCase(),
+      email: $("aEmail").value.trim().toLowerCase(), role,
+      permissions: role === "super_admin" ? Object.keys(LABELS) : perms,
+      active: true, createdAt: serverTimestamp(), createdBy: user.uid
+    });
+    await signOut(secAuth);
+    $("dlg").close(); $("adminForm").reset(); go("admins");
+  } catch (err) {
+    console.error(err);
+    alert(err.code === "auth/email-already-in-use" ? "This email is already registered." : "Unable to create admin (" + (err.code || err.message) + ")");
+  } finally { btn.disabled = false; btn.textContent = "Create admin"; }
+});
+
+/* ---------- system updates ---------- */
+async function addUpdate(){
+  if (!can("updates")) return;
+  const title = prompt("Update title"); if (!title) return;
+  const description = prompt("Description") || "";
+  const id = "UPD-" + Date.now();
+  try {
+    await setDoc(doc(db, "clientUpdates", id), {id, title: title.trim(), description: description.trim(), category: "Other", status: "completed", published: true, popup: false, createdAt: serverTimestamp(), createdBy: user.uid});
+    go("updates");
+  } catch (err) { console.error(err); alert("Unable to save update (" + (err.code || "error") + ")"); }
+}
+</script>
+</body>
+</html>
