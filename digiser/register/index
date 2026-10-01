@@ -1,0 +1,476 @@
+import { initializeApp }
+  from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+
+import { getFirestore, doc, setDoc, getDoc, serverTimestamp }
+  from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCAc-am544kM_qxSB6vn61Uk-8N_jpq2s",
+  authDomain: "digiserbds.firebaseapp.com",
+  projectId: "digiserbds",
+  storageBucket: "digiserbds.firebasestorage.app",
+  messagingSenderId: "543059824242",
+  appId: "1:543059824242:web:71cf0227ecddf2f840fceb",
+  measurementId: "G-NX8RD20E7S"
+};
+
+const db = getFirestore(initializeApp(firebaseConfig));
+
+const $ = id => document.getElementById(id);
+const val = id => $(id).value.trim();
+
+const DEFAULT_PAYMENT = {
+  enabled: true,
+  fee: 50,
+  currency: "BDT",
+  methods: {
+    bkash:  { enabled: true,  number: "+8801580422117" },
+    nagad:  { enabled: false, number: "" },
+    rocket: { enabled: false, number: "" }
+  },
+  instructions:
+    "Send the application fee to the selected merchant number. Then enter the sender mobile number and transaction ID. Upload your payment screenshot.",
+  screenshotRequired: true
+};
+
+let payment = structuredClone(DEFAULT_PAYMENT);
+let currentStep = 1;
+let submitting = false;
+
+const form = $("applicationForm");
+const steps = [...document.querySelectorAll(".form-step")];
+const indicators = [...document.querySelectorAll(".step[data-step-indicator]")];
+
+$("year").textContent = new Date().getFullYear();
+$("paymentDate").value = new Date().toISOString().slice(0, 10);
+
+/* ---------- Toast ---------- */
+
+let toastTimer = null;
+
+function showToast(message, type = "") {
+  const t = $("toast");
+  t.textContent = message;
+  t.className = "toast show " + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.className = "toast"; }, 4500);
+}
+
+/* ---------- Helpers ---------- */
+
+function normalizeMobile(value) {
+  let m = String(value || "").replace(/[\s-]/g, "");
+  if (m.startsWith("+880")) m = "0" + m.slice(4);
+  if (m.startsWith("880")) m = "0" + m.slice(3);
+  return m;
+}
+
+function validMobile(value) {
+  return /^01[3-9]\d{8}$/.test(normalizeMobile(value));
+}
+
+function createId(prefix) {
+  return prefix + Date.now().toString(36) + Math.random().toString(36).slice(2, 9);
+}
+
+function createApplicationId() {
+  return `DGS-${new Date().getFullYear()}-${Math.floor(10000 + Math.random() * 90000)}`;
+}
+
+/* ---------- Files (no Storage: saved inside Firestore as text) ---------- */
+
+function checkFile(input, maxMB, types) {
+  const file = input.files && input.files[0];
+  if (!file) return null;
+  if (file.size > maxMB * 1024 * 1024) {
+    throw new Error(`${file.name} is larger than ${maxMB} MB.`);
+  }
+  if (types.length && !types.includes(file.type)) {
+    throw new Error(`${file.name} has an unsupported file type.`);
+  }
+  return file;
+}
+
+function readAsDataURL(file) {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onerror = () => reject(new Error("File read failed."));
+    r.onload = () => resolve(r.result);
+    r.readAsDataURL(file);
+  });
+}
+
+function compressImage(file, maxWidth, quality) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("Invalid image file."));
+    };
+    img.onload = () => {
+      const scale = Math.min(1, maxWidth / img.width);
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.round(img.width * scale);
+      canvas.height = Math.round(img.height * scale);
+      const ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      URL.revokeObjectURL(url);
+      resolve(canvas.toDataURL("image/jpeg", quality));
+    };
+    img.src = url;
+  });
+}
+
+async function fileToData(file) {
+  if (!file) return "";
+
+  if (file.type.startsWith("image/")) {
+    let data = await compressImage(file, 900, 0.6);
+    if (data.length > 200000) data = await compressImage(file, 700, 0.45);
+    if (data.length > 250000) data = await compressImage(file, 500, 0.4);
+    if (data.length > 250000) {
+      throw new Error("Image is too large. Please use a smaller image.");
+    }
+    return data;
+  }
+
+  if (file.size > 300 * 1024) {
+    throw new Error("CV must be under 300 KB. Please upload a smaller file.");
+  }
+  return await readAsDataURL(file);
+}
+
+/* ---------- Payment settings ---------- */
+
+async function loadSettings() {
+  try {
+    const snap = await getDoc(doc(db, "settings", "payment"));
+    if (snap.exists()) {
+      const d = snap.data();
+      payment = {
+        ...DEFAULT_PAYMENT,
+        ...d,
+        methods: { ...DEFAULT_PAYMENT.methods, ...(d.methods || {}) }
+      };
+    }
+  } catch (error) {
+    console.warn("Payment settings could not be loaded:", error);
+  }
+  renderPayment();
+}
+
+function renderPayment() {
+  const enabled = payment.enabled !== false;
+
+  $("paymentEnabledBox").style.display = enabled ? "block" : "none";
+  $("paymentDisabledBox").style.display = enabled ? "none" : "block";
+  $("feeDisplay").textContent = `${payment.fee || 0} ${payment.currency || "BDT"}`;
+
+  const grid = $("methodGrid");
+  grid.innerHTML = "";
+
+  const methods = [
+    { key: "bkash", label: "bKash" },
+    { key: "nagad", label: "Nagad" },
+    { key: "rocket", label: "Rocket" }
+  ];
+
+  let count = 0;
+
+  methods.forEach(m => {
+    const cfg = payment.methods && payment.methods[m.key];
+    if (!cfg || !cfg.enabled) return;
+    count++;
+
+    const wrap = document.createElement("div");
+    wrap.className = "method";
+    wrap.innerHTML =
+      `<input type="radio" name="paymentMethod" id="method_${m.key}" value="${m.key}" ${count === 1 ? "checked" : ""}>` +
+      `<label for="method_${m.key}">${m.label}</label>`;
+    grid.appendChild(wrap);
+  });
+
+  if (!count) {
+    grid.innerHTML =
+      `<div style="grid-column:1/-1;padding:13px;border-radius:12px;background:#fff8ed;color:#85641f;font-size:12px;">No payment method is currently available.</div>`;
+  }
+
+  $("paymentInstructions").textContent =
+    payment.instructions || DEFAULT_PAYMENT.instructions;
+
+  updateMerchant();
+  updateRequirements();
+}
+
+function updateMerchant() {
+  const sel = document.querySelector('input[name="paymentMethod"]:checked');
+  const el = $("merchantInfo");
+
+  if (!sel) {
+    el.textContent = "No payment method selected.";
+    return;
+  }
+
+  const cfg = payment.methods && payment.methods[sel.value];
+  el.textContent = cfg && cfg.number
+    ? `${sel.value.toUpperCase()} Merchant: ${cfg.number}`
+    : "Merchant information is not configured yet.";
+}
+
+function updateRequirements() {
+  const enabled = payment.enabled !== false;
+  $("senderNumber").required = enabled;
+  $("trxId").required = enabled;
+  $("paymentScreenshot").required = enabled && payment.screenshotRequired === true;
+}
+
+document.addEventListener("change", e => {
+  if (e.target.matches('input[name="paymentMethod"]')) updateMerchant();
+});
+
+/* ---------- Steps ---------- */
+
+function validateStep(n) {
+  const step = document.querySelector(`.form-step[data-step="${n}"]`);
+  if (!step) return true;
+
+  const fields = step.querySelectorAll(
+    "input[required], select[required], textarea[required]"
+  );
+
+  for (const f of fields) {
+    if (!f.value.trim()) {
+      f.focus();
+      showToast("Please complete all required fields.", "error");
+      return false;
+    }
+    if (f.id === "mobile" && !validMobile(f.value)) {
+      f.focus();
+      showToast("Please enter a valid mobile number.", "error");
+      return false;
+    }
+  }
+  return true;
+}
+
+function updateSummary() {
+  $("summaryName").textContent = val("name") || "—";
+  $("summaryMobile").textContent = normalizeMobile($("mobile").value) || "—";
+  $("summaryJob").textContent = val("jobTitle") || "—";
+  $("summaryLocation").textContent = val("location") || "—";
+}
+
+function showStep(n) {
+  currentStep = n;
+
+  steps.forEach(s => s.classList.toggle("active", Number(s.dataset.step) === n));
+
+  indicators.forEach(i => {
+    const k = Number(i.dataset.stepIndicator);
+    i.classList.toggle("active", k === n);
+    i.classList.toggle("done", k < n);
+  });
+
+  if (n === 3) updateSummary();
+  if (n === 4) updateRequirements();
+
+  window.scrollTo({
+    top: document.querySelector(".form-shell").getBoundingClientRect().top + window.scrollY - 90,
+    behavior: "smooth"
+  });
+}
+
+document.querySelectorAll("[data-next]").forEach(b => {
+  b.addEventListener("click", () => {
+    if (!validateStep(currentStep)) return;
+    if (currentStep < 4) showStep(currentStep + 1);
+  });
+});
+
+document.querySelectorAll("[data-prev]").forEach(b => {
+  b.addEventListener("click", () => {
+    if (currentStep > 1) showStep(currentStep - 1);
+  });
+});
+
+/* ---------- Submit ---------- */
+
+form.addEventListener("submit", async event => {
+  event.preventDefault();
+
+  if (submitting) return;
+
+  if (!validateStep(1) || !validateStep(2) || !validateStep(3) || !validateStep(4)) {
+    return;
+  }
+
+  if (!$("consent").checked) {
+    showToast("Please confirm the information before submitting.", "error");
+    $("consent").focus();
+    return;
+  }
+
+  submitting = true;
+
+  const btn = $("submitBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading"><span class="spinner"></span>Submitting...</span>';
+
+  try {
+
+    const imgTypes = ["image/jpeg", "image/png", "image/webp"];
+    const cvTypes = [
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ];
+
+    const photo = checkFile($("photo"), 5, imgTypes);
+    const cv = checkFile($("cv"), 10, cvTypes);
+    const shot = checkFile($("paymentScreenshot"), 5, imgTypes);
+
+    const payEnabled = payment.enabled !== false;
+
+    if (payEnabled && payment.screenshotRequired && !shot) {
+      throw new Error("Payment screenshot is required.");
+    }
+
+    const sel = document.querySelector('input[name="paymentMethod"]:checked');
+    if (payEnabled && !sel) {
+      throw new Error("Please select a payment method.");
+    }
+
+    const photoData = await fileToData(photo);
+    const cvData = await fileToData(cv);
+    const shotData = await fileToData(shot);
+
+    const mobile = normalizeMobile($("mobile").value);
+    const profileId = createId("profile_");
+
+    await setDoc(doc(db, "applicantProfiles", profileId), {
+      name: val("name"),
+      mobile,
+      email: val("email"),
+      emergency: val("emergency"),
+      address: {
+        current: val("currentAddress"),
+        permanent: val("permanentAddress")
+      },
+      education: {
+        ssc: val("ssc"),
+        hsc: val("hsc"),
+        graduate: val("graduate"),
+        other: val("otherEducation")
+      },
+      experience: {
+        experience: val("experience"),
+        duty: val("duty"),
+        previousSalary: val("previousSalary")
+      },
+      skills: val("skills"),
+      language: val("language"),
+      reference: {
+        name: val("referenceName"),
+        contact: val("referenceContact"),
+        relation: val("referenceRelation")
+      },
+      photoUrl: photoData,
+      cvUrl: cvData,
+      cv: {
+        name: cv ? cv.name : "",
+        type: cv ? cv.type : "",
+        size: cv ? cv.size : 0
+      },
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    });
+
+    const applicationId = createApplicationId();
+    const now = new Date().toISOString();
+
+    await setDoc(doc(db, "applications", applicationId), {
+      id: applicationId,
+      profileId,
+      mobile,
+      jobId: "",
+      jobTitle: val("jobTitle"),
+      source: "website",
+      created: now,
+      updated: now,
+      status: payEnabled ? "payment_pending" : "submitted",
+      paymentStatus: payEnabled ? "pending" : "not_required",
+      notes: "",
+      applicationData: {
+        salary: val("expectedSalary"),
+        type: $("applicationType").value,
+        location: val("location"),
+        reference: val("applicationReference"),
+        extraInfo: val("extraInfo")
+      },
+      statusHistory: payEnabled
+        ? [{ status: "submitted", at: now }, { status: "payment_pending", at: now }]
+        : [{ status: "submitted", at: now }],
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    });
+
+    if (payEnabled) {
+      const paymentId = createId("payment_");
+
+      await setDoc(doc(db, "payments", paymentId), {
+        id: paymentId,
+        applicationId,
+        profileId,
+        method: sel.value,
+        amount: Number(payment.fee || 0),
+        currency: payment.currency || "BDT",
+        senderNumber: normalizeMobile($("senderNumber").value),
+        trxId: val("trxId"),
+        paymentDate: $("paymentDate").value || new Date().toISOString().slice(0, 10),
+        screenshotUrl: shotData,
+        screenshotName: shot ? shot.name : "",
+        status: "pending",
+        created: now,
+        updated: now,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      });
+    }
+
+    showSuccess(applicationId);
+
+  } catch (error) {
+
+    console.error("Submission failed:", error);
+
+    showToast(
+      error && error.message
+        ? error.message
+        : "Something went wrong. Please try again.",
+      "error"
+    );
+
+  } finally {
+
+    submitting = false;
+    btn.disabled = false;
+    btn.textContent = "Submit Application";
+
+  }
+});
+
+function showSuccess(applicationId) {
+  document.querySelector(".steps").style.display = "none";
+  form.style.display = "none";
+  $("successScreen").classList.add("active");
+  $("successApplicationId").textContent = applicationId;
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+/* ---------- Start ---------- */
+
+await loadSettings();
+showStep(1);
