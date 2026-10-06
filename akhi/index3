@@ -1,0 +1,3501 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<meta name="theme-color" content="#111111">
+<meta name="description" content="AKHI Furniture — premium furniture for refined homes and modern workspaces.">
+<meta name="robots" content="index,follow">
+
+<title>AKHI Furniture | Premium Furniture</title>
+
+<!-- =========================================================
+     PERFORMANCE FIRST
+========================================================= -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap"
+  rel="stylesheet"
+>
+
+<style>
+/* =========================================================
+   AKHI FURNITURE — PERFORMANCE PREMIUM UI
+========================================================= */
+
+:root{
+  --red:#e2262d;
+  --red-dark:#b9161c;
+  --black:#090909;
+  --black-2:#111111;
+  --black-3:#181818;
+  --paper:#f4f1ea;
+  --paper-2:#ebe7de;
+  --white:#fff;
+  --text:#171717;
+  --muted:#77736d;
+  --line:rgba(20,20,20,.12);
+  --white-line:rgba(255,255,255,.12);
+
+  --serif:"DM Serif Display",Georgia,serif;
+  --sans:"Barlow",Arial,sans-serif;
+
+  --max:1440px;
+  --header:82px;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+  background:var(--black);
+}
+
+body{
+  background:var(--paper);
+  color:var(--text);
+  font-family:var(--sans);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+body.loading{
+  overflow:hidden;
+}
+
+img{
+  display:block;
+  max-width:100%;
+}
+
+button,
+input{
+  font:inherit;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+::selection{
+  background:var(--red);
+  color:#fff;
+}
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+.loader{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  background:var(--black);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:
+    opacity .35s ease,
+    visibility .35s ease;
+}
+
+.loader.hide{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.loader-inner{
+  text-align:center;
+}
+
+.loader-logo{
+  font-size:clamp(28px,5vw,58px);
+  font-weight:800;
+  letter-spacing:-.07em;
+}
+
+.loader-logo span{
+  color:var(--red);
+}
+
+.loader-line{
+  width:100px;
+  height:2px;
+  margin:20px auto 0;
+  overflow:hidden;
+  background:rgba(255,255,255,.15);
+}
+
+.loader-line span{
+  display:block;
+  width:45%;
+  height:100%;
+  background:var(--red);
+  animation:loaderMove .8s infinite ease-in-out;
+}
+
+@keyframes loaderMove{
+  0%{transform:translateX(-120%)}
+  100%{transform:translateX(340%)}
+}
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.progress{
+  position:fixed;
+  left:0;
+  top:0;
+  width:0;
+  height:3px;
+  background:var(--red);
+  z-index:10001;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.site-header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:var(--header);
+  z-index:9000;
+
+  display:flex;
+  align-items:center;
+
+  color:#fff;
+  background:rgba(9,9,9,.12);
+  border-bottom:1px solid rgba(255,255,255,.08);
+
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+
+  transition:
+    background .3s ease,
+    height .3s ease,
+    border-color .3s ease;
+}
+
+.site-header.scrolled{
+  height:70px;
+  background:rgba(9,9,9,.92);
+  border-color:rgba(255,255,255,.1);
+}
+
+.header-inner{
+  width:min(calc(100% - 40px),var(--max));
+  margin:auto;
+
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:20px;
+}
+
+.logo{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  width:max-content;
+
+  font-weight:800;
+  letter-spacing:-.05em;
+  font-size:24px;
+}
+
+.logo-mark{
+  width:29px;
+  height:29px;
+  display:grid;
+  place-items:center;
+  background:var(--red);
+  color:#fff;
+  font-size:15px;
+  font-weight:800;
+}
+
+.logo span:last-child{
+  color:#fff;
+}
+
+.nav{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:30px;
+}
+
+.nav a{
+  position:relative;
+  color:rgba(255,255,255,.78);
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  transition:color .2s ease;
+}
+
+.nav a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-7px;
+  width:0;
+  height:1px;
+  background:var(--red);
+  transition:width .25s var(--ease);
+}
+
+.nav a:hover{
+  color:#fff;
+}
+
+.nav a:hover::after{
+  width:100%;
+}
+
+.header-actions{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  gap:8px;
+}
+
+.icon-btn{
+  width:40px;
+  height:40px;
+  border:1px solid rgba(255,255,255,.15);
+  background:rgba(255,255,255,.04);
+  color:#fff;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  transition:.25s ease;
+}
+
+.icon-btn:hover{
+  background:var(--red);
+  border-color:var(--red);
+  transform:translateY(-2px);
+}
+
+.menu-btn{
+  display:none;
+}
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.search-panel{
+  position:fixed;
+  inset:0;
+  z-index:9500;
+
+  background:rgba(5,5,5,.97);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+
+  transition:.3s ease;
+}
+
+.search-panel.open{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+.search-inner{
+  width:min(900px,calc(100% - 40px));
+}
+
+.search-close{
+  position:absolute;
+  right:30px;
+  top:30px;
+
+  width:48px;
+  height:48px;
+
+  border:1px solid rgba(255,255,255,.15);
+  background:none;
+  color:#fff;
+
+  border-radius:50%;
+  font-size:22px;
+}
+
+.search-label{
+  color:var(--red);
+  text-transform:uppercase;
+  letter-spacing:.15em;
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:15px;
+}
+
+.search-input{
+  width:100%;
+  background:none;
+  border:0;
+  border-bottom:1px solid rgba(255,255,255,.25);
+  padding:18px 0;
+
+  color:#fff;
+  font-size:clamp(30px,6vw,72px);
+  font-weight:400;
+  outline:0;
+}
+
+.search-input::placeholder{
+  color:rgba(255,255,255,.2);
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+  position:relative;
+  min-height:100svh;
+  background:var(--black);
+  color:#fff;
+  overflow:hidden;
+  contain:layout paint;
+}
+
+.hero-slides{
+  position:absolute;
+  inset:0;
+}
+
+.hero-slide{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .7s ease;
+}
+
+.hero-slide.active{
+  opacity:1;
+  visibility:visible;
+}
+
+.hero-slide img{
+  position:absolute;
+  inset:0;
+
+  width:100%;
+  height:100%;
+  object-fit:cover;
+
+  filter:saturate(.8);
+  transform:scale(1.01);
+
+  transition:transform 7s ease;
+}
+
+.hero-slide.active img{
+  transform:scale(1.045);
+}
+
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg,
+      rgba(0,0,0,.82) 0%,
+      rgba(0,0,0,.55) 42%,
+      rgba(0,0,0,.15) 100%),
+    linear-gradient(0deg,
+      rgba(0,0,0,.6),
+      transparent 45%);
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+
+  min-height:100svh;
+  width:min(calc(100% - 40px),var(--max));
+  margin:auto;
+
+  display:flex;
+  align-items:flex-end;
+  padding:0 0 110px;
+}
+
+.hero-copy{
+  max-width:780px;
+}
+
+.eyebrow{
+  display:flex;
+  align-items:center;
+  gap:12px;
+
+  color:#fff;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
+
+.eyebrow::before{
+  content:"";
+  width:38px;
+  height:1px;
+  background:var(--red);
+}
+
+.hero-title{
+  font-family:var(--serif);
+  font-weight:400;
+  font-size:clamp(58px,9vw,145px);
+  line-height:.86;
+  letter-spacing:-.055em;
+  max-width:950px;
+}
+
+.hero-title em{
+  color:var(--red);
+  font-style:italic;
+}
+
+.hero-description{
+  max-width:520px;
+  margin-top:30px;
+
+  color:rgba(255,255,255,.7);
+  font-size:16px;
+  line-height:1.7;
+}
+
+.hero-actions{
+  display:flex;
+  gap:12px;
+  margin-top:30px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  min-height:50px;
+  padding:0 24px;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+
+  transition:.25s var(--ease);
+}
+
+.btn-red{
+  background:var(--red);
+  color:#fff;
+}
+
+.btn-red:hover{
+  background:#fff;
+  color:#111;
+  transform:translateY(-3px);
+}
+
+.btn-outline{
+  color:#fff;
+  border:1px solid rgba(255,255,255,.35);
+  background:rgba(255,255,255,.03);
+}
+
+.btn-outline:hover{
+  border-color:#fff;
+  background:#fff;
+  color:#111;
+}
+
+.hero-controls{
+  position:absolute;
+  right:35px;
+  bottom:40px;
+  z-index:4;
+
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.slide-number{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#fff;
+  font-size:12px;
+}
+
+.slide-number .current{
+  font-size:18px;
+  font-weight:700;
+}
+
+.slide-line{
+  width:65px;
+  height:1px;
+  background:rgba(255,255,255,.3);
+}
+
+.hero-arrow{
+  width:44px;
+  height:44px;
+  border:1px solid rgba(255,255,255,.25);
+  color:#fff;
+  background:rgba(0,0,0,.15);
+  border-radius:50%;
+  transition:.25s;
+}
+
+.hero-arrow:hover{
+  background:var(--red);
+  border-color:var(--red);
+}
+
+/* =========================================================
+   MARQUEE
+========================================================= */
+
+.marquee{
+  overflow:hidden;
+  background:var(--red);
+  color:#fff;
+  white-space:nowrap;
+}
+
+.marquee-track{
+  width:max-content;
+  display:flex;
+  animation:marquee 24s linear infinite;
+}
+
+.marquee-item{
+  display:flex;
+  align-items:center;
+  gap:35px;
+  padding:17px 20px;
+
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+
+.marquee-dot{
+  width:6px;
+  height:6px;
+  background:#fff;
+  border-radius:50%;
+}
+
+@keyframes marquee{
+  to{
+    transform:translateX(-50%);
+  }
+}
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.section{
+  width:min(calc(100% - 40px),var(--max));
+  margin:auto;
+}
+
+.section-pad{
+  padding:130px 0;
+}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:40px;
+  margin-bottom:55px;
+}
+
+.section-kicker{
+  color:var(--red);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  margin-bottom:14px;
+}
+
+.section-title{
+  font-family:var(--serif);
+  font-size:clamp(44px,6vw,82px);
+  line-height:.95;
+  font-weight:400;
+  letter-spacing:-.045em;
+}
+
+.section-description{
+  max-width:390px;
+  color:var(--muted);
+  font-size:15px;
+  line-height:1.75;
+}
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.intro{
+  background:var(--paper);
+}
+
+.intro-grid{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:90px;
+  align-items:end;
+}
+
+.intro-big{
+  font-family:var(--serif);
+  font-size:clamp(45px,6vw,82px);
+  line-height:1;
+  font-weight:400;
+  letter-spacing:-.05em;
+}
+
+.intro-big em{
+  color:var(--red);
+}
+
+.intro-text{
+  color:var(--muted);
+  line-height:1.8;
+  font-size:16px;
+}
+
+/* =========================================================
+   CATEGORIES
+========================================================= */
+
+.categories{
+  background:var(--black);
+  color:#fff;
+}
+
+.category-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1px;
+  background:rgba(255,255,255,.12);
+}
+
+.category-card{
+  min-height:390px;
+  position:relative;
+  overflow:hidden;
+  background:var(--black-2);
+}
+
+.category-card img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:.7;
+  transition:transform .7s var(--ease),opacity .4s;
+}
+
+.category-card:hover img{
+  transform:scale(1.06);
+  opacity:.9;
+}
+
+.category-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(0deg,rgba(0,0,0,.9),transparent 65%);
+}
+
+.category-content{
+  position:absolute;
+  left:28px;
+  right:28px;
+  bottom:27px;
+}
+
+.category-number{
+  color:var(--red);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.15em;
+}
+
+.category-name{
+  margin-top:7px;
+  font-family:var(--serif);
+  font-size:32px;
+}
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
+
+.shop{
+  background:var(--paper);
+}
+
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:38px 20px;
+}
+
+.product-card{
+  min-width:0;
+}
+
+.product-image{
+  position:relative;
+  aspect-ratio:1 / 1.08;
+  overflow:hidden;
+  background:#ded9cf;
+}
+
+.product-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform .65s var(--ease);
+}
+
+.product-card:hover .product-image img{
+  transform:scale(1.045);
+}
+
+.product-tag{
+  position:absolute;
+  left:15px;
+  top:15px;
+  background:var(--red);
+  color:#fff;
+  padding:7px 10px;
+
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+
+.product-info{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+  padding:17px 2px 0;
+}
+
+.product-name{
+  font-size:17px;
+  font-weight:600;
+}
+
+.product-category{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:5px;
+}
+
+.product-price{
+  font-size:16px;
+  font-weight:700;
+}
+
+.product-link{
+  margin-top:13px;
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+
+  color:var(--red);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+
+/* =========================================================
+   STATEMENT
+========================================================= */
+
+.statement{
+  background:var(--red);
+  color:#fff;
+  overflow:hidden;
+}
+
+.statement-inner{
+  padding:150px 0;
+  text-align:center;
+}
+
+.statement-title{
+  font-family:var(--serif);
+  font-size:clamp(55px,10vw,145px);
+  line-height:.82;
+  letter-spacing:-.06em;
+  font-weight:400;
+}
+
+.statement-title em{
+  font-style:italic;
+}
+
+/* =========================================================
+   EXPERIENCE
+========================================================= */
+
+.experience{
+  background:#171717;
+  color:#fff;
+}
+
+.experience-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:90px;
+  align-items:center;
+}
+
+.experience-image{
+  aspect-ratio:1/1.08;
+  overflow:hidden;
+}
+
+.experience-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.experience-copy .section-kicker{
+  color:#fff;
+}
+
+.experience-title{
+  font-family:var(--serif);
+  font-size:clamp(46px,6vw,80px);
+  line-height:.92;
+  font-weight:400;
+  letter-spacing:-.05em;
+}
+
+.experience-title span{
+  color:var(--red);
+}
+
+.experience-text{
+  margin-top:28px;
+  max-width:500px;
+  color:rgba(255,255,255,.6);
+  line-height:1.8;
+}
+
+.experience-list{
+  margin-top:40px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:25px;
+}
+
+.experience-item{
+  border-top:1px solid rgba(255,255,255,.15);
+  padding-top:15px;
+}
+
+.experience-item strong{
+  display:block;
+  font-size:30px;
+}
+
+.experience-item span{
+  color:rgba(255,255,255,.45);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+}
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.cta{
+  background:var(--paper-2);
+}
+
+.cta-box{
+  min-height:500px;
+  padding:70px;
+  position:relative;
+  overflow:hidden;
+
+  display:flex;
+  align-items:flex-end;
+
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.88),rgba(0,0,0,.2)),
+    url("https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1800&q=78")
+    center/cover no-repeat;
+
+  color:#fff;
+}
+
+.cta-content{
+  position:relative;
+  z-index:2;
+  max-width:760px;
+}
+
+.cta-title{
+  font-family:var(--serif);
+  font-size:clamp(48px,7vw,95px);
+  line-height:.9;
+  letter-spacing:-.05em;
+}
+
+.cta-text{
+  max-width:480px;
+  margin-top:25px;
+  color:rgba(255,255,255,.7);
+  line-height:1.7;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+  background:var(--black);
+  color:#fff;
+  padding:80px 0 30px;
+}
+
+.footer-top{
+  width:min(calc(100% - 40px),var(--max));
+  margin:auto;
+
+  display:grid;
+  grid-template-columns:1.3fr 1fr 1fr 1fr;
+  gap:50px;
+  padding-bottom:70px;
+}
+
+.footer-logo{
+  font-size:30px;
+  font-weight:800;
+  letter-spacing:-.06em;
+}
+
+.footer-logo span{
+  color:var(--red);
+}
+
+.footer-about{
+  max-width:300px;
+  margin-top:18px;
+  color:rgba(255,255,255,.45);
+  line-height:1.7;
+  font-size:14px;
+}
+
+.footer-title{
+  color:#fff;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
+
+.footer-links{
+  display:grid;
+  gap:11px;
+}
+
+.footer-links a{
+  color:rgba(255,255,255,.48);
+  font-size:14px;
+  transition:.2s;
+}
+
+.footer-links a:hover{
+  color:#fff;
+}
+
+.footer-bottom{
+  width:min(calc(100% - 40px),var(--max));
+  margin:auto;
+
+  border-top:1px solid rgba(255,255,255,.1);
+  padding-top:22px;
+
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+
+  color:rgba(255,255,255,.35);
+  font-size:11px;
+}
+
+/* =========================================================
+   FLOATING ACTIONS
+========================================================= */
+
+.floating-actions{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:7000;
+
+  display:grid;
+  gap:8px;
+}
+
+.float-btn{
+  width:48px;
+  height:48px;
+
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+
+  background:#111;
+  color:#fff;
+
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 12px 35px rgba(0,0,0,.2);
+
+  transition:.25s;
+}
+
+.float-btn:hover{
+  transform:translateY(-4px);
+  background:var(--red);
+  border-color:var(--red);
+}
+
+/* =========================================================
+   REVEAL
+========================================================= */
+
+.reveal{
+  opacity:0;
+  transform:translateY(25px);
+  transition:
+    opacity .7s ease,
+    transform .7s var(--ease);
+}
+
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+
+/* =========================================================
+   CUSTOM CURSOR
+========================================================= */
+
+.cursor-dot,
+.cursor-ring{
+  position:fixed;
+  pointer-events:none;
+  z-index:99998;
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  display:none;
+}
+
+.cursor-dot{
+  width:6px;
+  height:6px;
+  background:var(--red);
+}
+
+.cursor-ring{
+  width:30px;
+  height:30px;
+  border:1px solid rgba(226,38,45,.7);
+  transition:
+    width .2s,
+    height .2s,
+    border-color .2s;
+}
+
+.cursor-ring.hover{
+  width:50px;
+  height:50px;
+  border-color:#fff;
+}
+
+@media (pointer:fine){
+  .cursor-dot,
+  .cursor-ring{
+    display:block;
+  }
+
+  body{
+    cursor:none;
+  }
+
+  a,
+  button,
+  input{
+    cursor:none;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1050px){
+
+  .nav{
+    gap:18px;
+  }
+
+  .category-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .footer-top{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:820px){
+
+  :root{
+    --header:70px;
+  }
+
+  .header-inner{
+    grid-template-columns:1fr auto;
+  }
+
+  .nav{
+    position:fixed;
+    left:15px;
+    right:15px;
+    top:78px;
+
+    padding:25px;
+
+    background:rgba(10,10,10,.97);
+    border:1px solid rgba(255,255,255,.1);
+
+    display:grid;
+    gap:20px;
+
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(-10px);
+
+    transition:.25s ease;
+  }
+
+  .nav.open{
+    opacity:1;
+    visibility:visible;
+    transform:none;
+  }
+
+  .header-actions{
+    gap:6px;
+  }
+
+  .menu-btn{
+    display:grid;
+  }
+
+  .intro-grid,
+  .experience-grid{
+    grid-template-columns:1fr;
+    gap:50px;
+  }
+
+  .product-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .section-pad{
+    padding:95px 0;
+  }
+
+  .cta-box{
+    padding:45px 30px;
+    min-height:480px;
+  }
+
+  .experience-list{
+    gap:18px;
+  }
+}
+
+@media(max-width:560px){
+
+  .header-inner,
+  .section,
+  .footer-top,
+  .footer-bottom,
+  .hero-content{
+    width:min(calc(100% - 28px),var(--max));
+  }
+
+  .logo{
+    font-size:21px;
+  }
+
+  .logo-mark{
+    width:25px;
+    height:25px;
+  }
+
+  .header-actions .search-btn{
+    display:none;
+  }
+
+  .hero-content{
+    padding-bottom:95px;
+  }
+
+  .hero-title{
+    font-size:clamp(55px,17vw,88px);
+  }
+
+  .hero-description{
+    font-size:14px;
+  }
+
+  .hero-controls{
+    right:15px;
+    bottom:22px;
+  }
+
+  .hero-arrow{
+    width:38px;
+    height:38px;
+  }
+
+  .category-grid{
+    grid-template-columns:1fr;
+  }
+
+  .category-card{
+    min-height:300px;
+  }
+
+  .product-grid{
+    grid-template-columns:1fr;
+  }
+
+  .section-head{
+    display:block;
+  }
+
+  .section-description{
+    margin-top:25px;
+  }
+
+  .statement-inner{
+    padding:105px 0;
+  }
+
+  .experience-list{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .footer-top{
+    grid-template-columns:1fr 1fr;
+    gap:35px 20px;
+  }
+
+  .footer-about{
+    max-width:260px;
+  }
+
+  .footer-bottom{
+    flex-direction:column;
+  }
+}
+
+/* =========================================================
+   REDUCE MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+  *,
+  *::before,
+  *::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    scroll-behavior:auto!important;
+    transition-duration:.01ms!important;
+  }
+
+  .reveal{
+    opacity:1;
+    transform:none;
+  }
+}
+</style>
+</head>
+
+<body class="loading">
+
+<!-- =========================================================
+     FAST LOADER
+========================================================= -->
+<div class="loader" id="loader">
+  <div class="loader-inner">
+    <div class="loader-logo">AKHI<span>.</span></div>
+    <div class="loader-line">
+      <span></span>
+    </div>
+  </div>
+</div>
+
+<div class="progress" id="progress"></div>
+
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+<header class="site-header" id="header">
+  <div class="header-inner">
+
+    <a href="#home" class="logo" aria-label="AKHI Furniture">
+      <span class="logo-mark">A</span>
+      <span>AKHI.</span>
+    </a>
+
+    <nav class="nav" id="nav">
+      <a href="#home">Home</a>
+      <a href="#shop">Collection</a>
+      <a href="#categories">Categories</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="header-actions">
+
+      <button
+        class="icon-btn search-btn"
+        id="searchBtn"
+        aria-label="Search"
+        type="button"
+      >
+        ⌕
+      </button>
+
+      <button
+        class="icon-btn menu-btn"
+        id="menuBtn"
+        aria-label="Menu"
+        type="button"
+      >
+        ☰
+      </button>
+
+    </div>
+  </div>
+</header>
+
+<!-- =========================================================
+     SEARCH
+========================================================= -->
+<div class="search-panel" id="searchPanel">
+  <button class="search-close" id="searchClose" type="button">×</button>
+
+  <div class="search-inner">
+    <div class="search-label">Search AKHI Collection</div>
+
+    <input
+      id="searchInput"
+      class="search-input"
+      type="search"
+      placeholder="What are you looking for?"
+      autocomplete="off"
+    >
+  </div>
+</div>
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+<main>
+
+<section class="hero" id="home">
+
+  <div class="hero-slides" id="heroSlides">
+
+    <!-- STATIC FIRST PAINT HERO -->
+    <article class="hero-slide active">
+      <img
+        src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=2000&q=82"
+        alt="Premium modern furniture interior"
+        fetchpriority="high"
+        decoding="async"
+      >
+
+      <div class="hero-overlay"></div>
+
+      <div class="hero-content">
+        <div class="hero-copy">
+
+          <div class="eyebrow">
+            AKHI Furniture
+          </div>
+
+          <h1 class="hero-title">
+            Furniture<br>
+            with <em>character.</em>
+          </h1>
+
+          <p class="hero-description">
+            Premium furniture designed for refined homes,
+            sophisticated interiors and modern workspaces.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#shop" class="btn btn-red">
+              Explore Collection →
+            </a>
+
+            <a href="#contact" class="btn btn-outline">
+              Talk to AKHI
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="hero-controls">
+
+    <div class="slide-number">
+      <span class="current" id="slideCurrent">01</span>
+      <span class="slide-line"></span>
+      <span id="slideTotal">01</span>
+    </div>
+
+    <button class="hero-arrow" id="prevSlide" type="button">←</button>
+    <button class="hero-arrow" id="nextSlide" type="button">→</button>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     MARQUEE
+========================================================= -->
+<div class="marquee">
+  <div class="marquee-track">
+
+    <div class="marquee-item">
+      Premium Furniture
+      <span class="marquee-dot"></span>
+      Refined Living
+      <span class="marquee-dot"></span>
+      Modern Craft
+      <span class="marquee-dot"></span>
+      AKHI Furniture
+      <span class="marquee-dot"></span>
+    </div>
+
+    <div class="marquee-item">
+      Premium Furniture
+      <span class="marquee-dot"></span>
+      Refined Living
+      <span class="marquee-dot"></span>
+      Modern Craft
+      <span class="marquee-dot"></span>
+      AKHI Furniture
+      <span class="marquee-dot"></span>
+    </div>
+
+  </div>
+</div>
+
+<!-- =========================================================
+     INTRO
+========================================================= -->
+<section class="intro section-pad">
+  <div class="section intro-grid">
+
+    <div class="reveal">
+      <div class="section-kicker">01 / The AKHI Approach</div>
+
+      <h2 class="intro-big">
+        Good furniture fills a room.
+        <em>Great furniture defines it.</em>
+      </h2>
+    </div>
+
+    <div class="reveal">
+      <p class="intro-text">
+        AKHI creates furniture for people who care about
+        proportion, material, comfort and the details that
+        quietly change how a space feels.
+      </p>
+
+      <br>
+
+      <p class="intro-text">
+        From statement pieces to everyday essentials,
+        every collection is selected with a simple idea:
+        beautiful things should also belong in real life.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================
+     CATEGORIES
+========================================================= -->
+<section class="categories section-pad" id="categories">
+
+  <div class="section">
+
+    <div class="section-head reveal">
+
+      <div>
+        <div class="section-kicker">02 / Explore</div>
+
+        <h2 class="section-title">
+          Spaces,<br>
+          thoughtfully.
+        </h2>
+      </div>
+
+      <p class="section-description">
+        Discover furniture collections curated around
+        how modern spaces are actually lived in.
+      </p>
+
+    </div>
+
+    <div class="category-grid" id="categoryGrid">
+
+      <a href="#shop" class="category-card reveal" data-category="Living">
+
+        <img
+          src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=900&q=75"
+          alt="Living room furniture"
+          loading="lazy"
+          decoding="async"
+        >
+
+        <div class="category-overlay"></div>
+
+        <div class="category-content">
+          <div class="category-number">01</div>
+          <div class="category-name">Living</div>
+        </div>
+
+      </a>
+
+      <a href="#shop" class="category-card reveal" data-category="Dining">
+
+        <img
+          src="https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=900&q=75"
+          alt="Dining furniture"
+          loading="lazy"
+          decoding="async"
+        >
+
+        <div class="category-overlay"></div>
+
+        <div class="category-content">
+          <div class="category-number">02</div>
+          <div class="category-name">Dining</div>
+        </div>
+
+      </a>
+
+      <a href="#shop" class="category-card reveal" data-category="Bedroom">
+
+        <img
+          src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=75"
+          alt="Bedroom furniture"
+          loading="lazy"
+          decoding="async"
+        >
+
+        <div class="category-overlay"></div>
+
+        <div class="category-content">
+          <div class="category-number">03</div>
+          <div class="category-name">Bedroom</div>
+        </div>
+
+      </a>
+
+      <a href="#shop" class="category-card reveal" data-category="Office">
+
+        <img
+          src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=75"
+          alt="Office furniture"
+          loading="lazy"
+          decoding="async"
+        >
+
+        <div class="category-overlay"></div>
+
+        <div class="category-content">
+          <div class="category-number">04</div>
+          <div class="category-name">Workspace</div>
+        </div>
+
+      </a>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================
+     SHOP
+========================================================= -->
+<section class="shop section-pad" id="shop">
+
+  <div class="section">
+
+    <div class="section-head reveal">
+
+      <div>
+        <div class="section-kicker">03 / Selected Collection</div>
+
+        <h2 class="section-title">
+          Designed<br>
+          to stay.
+        </h2>
+      </div>
+
+      <p class="section-description">
+        A selection of pieces chosen for timeless
+        proportion, everyday comfort and visual impact.
+      </p>
+
+    </div>
+
+    <div class="product-grid" id="productGrid">
+
+      <!--
+        Static first products are rendered immediately.
+        Firebase will silently replace these later.
+      -->
+
+      <article class="product-card reveal">
+        <div class="product-image">
+          <img
+            src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1000&q=78"
+            alt="Modern Sofa"
+            loading="lazy"
+            decoding="async"
+          >
+          <span class="product-tag">Featured</span>
+        </div>
+
+        <div class="product-info">
+          <div>
+            <div class="product-name">Modern Lounge Sofa</div>
+            <div class="product-category">Living / Seating</div>
+          </div>
+
+          <div class="product-price">৳ 48,500</div>
+        </div>
+
+        <a href="#contact" class="product-link">
+          Enquire →
+        </a>
+      </article>
+
+      <article class="product-card reveal">
+        <div class="product-image">
+          <img
+            src="https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=1000&q=78"
+            alt="Dining Table"
+            loading="lazy"
+            decoding="async"
+          >
+        </div>
+
+        <div class="product-info">
+          <div>
+            <div class="product-name">Oak Dining Table</div>
+            <div class="product-category">Dining / Table</div>
+          </div>
+
+          <div class="product-price">৳ 42,000</div>
+        </div>
+
+        <a href="#contact" class="product-link">
+          Enquire →
+        </a>
+      </article>
+
+      <article class="product-card reveal">
+        <div class="product-image">
+          <img
+            src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1000&q=78"
+            alt="Premium Bed"
+            loading="lazy"
+            decoding="async"
+          >
+        </div>
+
+        <div class="product-info">
+          <div>
+            <div class="product-name">Signature Bed</div>
+            <div class="product-category">Bedroom / Bed</div>
+          </div>
+
+          <div class="product-price">৳ 55,000</div>
+        </div>
+
+        <a href="#contact" class="product-link">
+          Enquire →
+        </a>
+      </article>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================
+     STATEMENT
+========================================================= -->
+<section class="statement">
+  <div class="section statement-inner reveal">
+
+    <div class="section-kicker" style="color:#fff">
+      The AKHI Standard
+    </div>
+
+    <h2 class="statement-title">
+      Less noise.<br>
+      <em>More character.</em>
+    </h2>
+
+  </div>
+</section>
+
+<!-- =========================================================
+     EXPERIENCE
+========================================================= -->
+<section class="experience section-pad" id="experience">
+
+  <div class="section experience-grid">
+
+    <div class="experience-image reveal">
+
+      <img
+        src="https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=1200&q=80"
+        alt="AKHI premium interior"
+        loading="lazy"
+        decoding="async"
+      >
+
+    </div>
+
+    <div class="experience-copy reveal">
+
+      <div class="section-kicker">
+        04 / The Experience
+      </div>
+
+      <h2 class="experience-title">
+        Furniture should feel
+        <span>personal.</span>
+      </h2>
+
+      <p class="experience-text">
+        We believe the best interiors are not built around
+        trends. They are built around people. AKHI combines
+        considered design with practical comfort to create
+        pieces that feel right from day one.
+      </p>
+
+      <div class="experience-list">
+
+        <div class="experience-item">
+          <strong>01</strong>
+          <span>Curated Design</span>
+        </div>
+
+        <div class="experience-item">
+          <strong>02</strong>
+          <span>Premium Materials</span>
+        </div>
+
+        <div class="experience-item">
+          <strong>03</strong>
+          <span>Thoughtful Detail</span>
+        </div>
+
+        <div class="experience-item">
+          <strong>04</strong>
+          <span>Human Comfort</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================
+     CTA
+========================================================= -->
+<section class="cta section-pad" id="contact">
+
+  <div class="section">
+
+    <div class="cta-box reveal">
+
+      <div class="cta-content">
+
+        <div class="section-kicker" style="color:#fff">
+          Start a conversation
+        </div>
+
+        <h2 class="cta-title">
+          Your space<br>
+          deserves better.
+        </h2>
+
+        <p class="cta-text">
+          Tell us what you are looking for and our team
+          will help you find the right piece for your space.
+        </p>
+
+        <div class="hero-actions">
+
+          <a
+            href="#"
+            id="whatsappLink"
+            class="btn btn-red"
+            target="_blank"
+            rel="noopener"
+          >
+            WhatsApp AKHI →
+          </a>
+
+          <a
+            href="tel:+8801700000000"
+            id="callLink"
+            class="btn btn-outline"
+          >
+            Call Us
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+<footer class="footer">
+
+  <div class="footer-top">
+
+    <div>
+
+      <div class="footer-logo">
+        AKHI<span>.</span>
+      </div>
+
+      <p class="footer-about">
+        Premium furniture for refined homes,
+        modern workspaces and people who care
+        about the details.
+      </p>
+
+    </div>
+
+    <div>
+
+      <div class="footer-title">Explore</div>
+
+      <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#shop">Collection</a>
+        <a href="#categories">Categories</a>
+        <a href="#experience">Experience</a>
+      </div>
+
+    </div>
+
+    <div>
+
+      <div class="footer-title">Collection</div>
+
+      <div class="footer-links">
+        <a href="#shop">Living</a>
+        <a href="#shop">Dining</a>
+        <a href="#shop">Bedroom</a>
+        <a href="#shop">Workspace</a>
+      </div>
+
+    </div>
+
+    <div>
+
+      <div class="footer-title">Contact</div>
+
+      <div class="footer-links">
+        <a href="#" id="footerWhatsapp">WhatsApp</a>
+        <a href="tel:+8801700000000" id="footerCall">Call AKHI</a>
+        <a href="mailto:hello@akhifurniture.com" id="footerEmail">
+          Email
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+
+    <span>
+      © <span id="year"></span> AKHI Furniture. All rights reserved.
+    </span>
+
+    <span>
+      Crafted for better spaces.
+    </span>
+
+  </div>
+
+</footer>
+
+<!-- =========================================================
+     FLOATING ACTIONS
+========================================================= -->
+<div class="floating-actions">
+
+  <a
+    href="#"
+    id="floatingWhatsApp"
+    class="float-btn"
+    target="_blank"
+    rel="noopener"
+    aria-label="WhatsApp"
+  >
+    WA
+  </a>
+
+  <a
+    href="tel:+8801700000000"
+    id="floatingCall"
+    class="float-btn"
+    aria-label="Call"
+  >
+    ☎
+  </a>
+
+</div>
+
+<!-- =========================================================
+     PERFORMANCE-FIRST APP
+========================================================= -->
+<script>
+(() => {
+  "use strict";
+
+  /* =======================================================
+     HELPERS
+  ======================================================= */
+
+  const $ = (s, root=document) => root.querySelector(s);
+  const $$ = (s, root=document) => [...root.querySelectorAll(s)];
+
+  const esc = value =>
+    String(value ?? "")
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
+
+  const price = value => {
+    if(value === undefined || value === null || value === "") return "";
+    const n = Number(String(value).replace(/[^\d.]/g,""));
+    if(!Number.isFinite(n)) return esc(value);
+
+    return "৳ " + n.toLocaleString("en-BD");
+  };
+
+  const idle = fn => {
+    if("requestIdleCallback" in window){
+      requestIdleCallback(fn,{timeout:1800});
+    }else{
+      setTimeout(fn,250);
+    }
+  };
+
+  /* =======================================================
+     DEFAULT SETTINGS
+  ======================================================= */
+
+  const DEFAULT_SETTINGS = {
+    whatsapp:"8801700000000",
+    phone:"+8801700000000",
+    email:"hello@akhifurniture.com"
+  };
+
+  let SETTINGS = {...DEFAULT_SETTINGS};
+
+  /* =======================================================
+     DEMO DATA
+     Firebase updates this later.
+  ======================================================= */
+
+  const DEMO_PRODUCTS = [
+    {
+      name:"Modern Lounge Sofa",
+      category:"Living / Seating",
+      price:48500,
+      image:"https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1000&q=78",
+      featured:true
+    },
+    {
+      name:"Oak Dining Table",
+      category:"Dining / Table",
+      price:42000,
+      image:"https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=1000&q=78"
+    },
+    {
+      name:"Signature Bed",
+      category:"Bedroom / Bed",
+      price:55000,
+      image:"https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1000&q=78"
+    },
+    {
+      name:"Minimal Lounge Chair",
+      category:"Living / Chair",
+      price:18500,
+      image:"https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=1000&q=78"
+    },
+    {
+      name:"Executive Work Desk",
+      category:"Workspace / Desk",
+      price:36000,
+      image:"https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1000&q=78"
+    },
+    {
+      name:"Soft Accent Chair",
+      category:"Living / Seating",
+      price:22500,
+      image:"https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1000&q=78"
+    },
+    {
+      name:"Contemporary Side Table",
+      category:"Living / Table",
+      price:12500,
+      image:"https://images.unsplash.com/photo-1532372320572-cda25653a26d?auto=format&fit=crop&w=1000&q=78"
+    },
+    {
+      name:"Premium Bedroom Set",
+      category:"Bedroom / Collection",
+      price:78000,
+      image:"https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1000&q=78"
+    },
+    {
+      name:"Modern Office Chair",
+      category:"Workspace / Seating",
+      price:19500,
+      image:"https://images.unsplash.com/photo-1580480055273-228ff5388ef8?auto=format&fit=crop&w=1000&q=78"
+    },
+    {
+      name:"Classic Console",
+      category:"Living / Console",
+      price:28500,
+      image:"https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=1000&q=78"
+    },
+    {
+      name:"Round Dining Set",
+      category:"Dining / Set",
+      price:46500,
+      image:"https://images.unsplash.com/photo-1549497538-303791108f95?auto=format&fit=crop&w=1000&q=78"
+    },
+    {
+      name:"Statement Armchair",
+      category:"Living / Chair",
+      price:24500,
+      image:"https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=1000&q=78"
+    }
+  ];
+
+  const DEMO_BANNERS = [
+    {
+      title:"Furniture with character.",
+      subtitle:"Premium furniture designed for refined spaces.",
+      image:"https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=2000&q=82"
+    },
+    {
+      title:"Designed to stay.",
+      subtitle:"Timeless forms for modern living.",
+      image:"https://images.unsplash.com/photo-1615529162924-f8605388461d?auto=format&fit=crop&w=2000&q=82"
+    },
+    {
+      title:"Make room for better.",
+      subtitle:"Furniture that changes the feeling of a space.",
+      image:"https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=2000&q=82"
+    }
+  ];
+
+  let PRODUCTS = [...DEMO_PRODUCTS];
+  let BANNERS = [...DEMO_BANNERS];
+
+  let activeSlide = 0;
+  let slideTimer = null;
+
+  /* =======================================================
+     INITIAL YEAR
+  ======================================================= */
+
+  $("#year").textContent = new Date().getFullYear();
+
+  /* =======================================================
+     LOADER
+     
+     IMPORTANT:
+     Loader does NOT wait for Firebase.
+  ======================================================= */
+
+  const hideLoader = () => {
+
+    const loader = $("#loader");
+
+    if(!loader) return;
+
+    requestAnimationFrame(() => {
+
+      setTimeout(() => {
+
+        loader.classList.add("hide");
+        document.body.classList.remove("loading");
+
+      },120);
+
+    });
+
+  };
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded",hideLoader,{once:true});
+  }else{
+    hideLoader();
+  }
+
+  /* =======================================================
+     HEADER
+  ======================================================= */
+
+  const header = $("#header");
+
+  const updateHeader = () => {
+    header.classList.toggle("scrolled",window.scrollY > 30);
+  };
+
+  window.addEventListener("scroll",updateHeader,{
+    passive:true
+  });
+
+  updateHeader();
+
+  /* =======================================================
+     SCROLL PROGRESS
+  ======================================================= */
+
+  const progress = $("#progress");
+
+  window.addEventListener("scroll",() => {
+
+    const max =
+      document.documentElement.scrollHeight -
+      window.innerHeight;
+
+    const value = max > 0
+      ? (window.scrollY / max) * 100
+      : 0;
+
+    progress.style.width = value + "%";
+
+  },{
+    passive:true
+  });
+
+  /* =======================================================
+     MOBILE MENU
+  ======================================================= */
+
+  const nav = $("#nav");
+  const menuBtn = $("#menuBtn");
+
+  menuBtn?.addEventListener("click",() => {
+    nav.classList.toggle("open");
+  });
+
+  $$(".nav a").forEach(link => {
+
+    link.addEventListener("click",() => {
+      nav.classList.remove("open");
+    });
+
+  });
+
+  /* =======================================================
+     SEARCH
+  ======================================================= */
+
+  const searchPanel = $("#searchPanel");
+  const searchInput = $("#searchInput");
+
+  $("#searchBtn")?.addEventListener("click",() => {
+
+    searchPanel.classList.add("open");
+
+    setTimeout(() => {
+      searchInput?.focus();
+    },80);
+
+  });
+
+  $("#searchClose")?.addEventListener("click",() => {
+    searchPanel.classList.remove("open");
+  });
+
+  document.addEventListener("keydown",event => {
+
+    if(event.key === "Escape"){
+      searchPanel.classList.remove("open");
+      nav.classList.remove("open");
+    }
+
+    if(
+      event.key === "/" &&
+      document.activeElement !== searchInput
+    ){
+      event.preventDefault();
+
+      searchPanel.classList.add("open");
+
+      setTimeout(() => {
+        searchInput?.focus();
+      },50);
+    }
+
+  });
+
+  /* =======================================================
+     SEARCH FILTER
+  ======================================================= */
+
+  searchInput?.addEventListener("input",event => {
+
+    const query = event.target.value
+      .trim()
+      .toLowerCase();
+
+    renderProducts(query);
+
+  });
+
+  /* =======================================================
+     PRODUCTS
+  ======================================================= */
+
+  function renderProducts(query=""){
+
+    const grid = $("#productGrid");
+
+    if(!grid) return;
+
+    let list = PRODUCTS;
+
+    if(query){
+
+      list = PRODUCTS.filter(item => {
+
+        const haystack = [
+          item.name,
+          item.category,
+          item.description
+        ]
+        .join(" ")
+        .toLowerCase();
+
+        return haystack.includes(query);
+
+      });
+
+    }
+
+    if(!list.length){
+
+      grid.innerHTML = `
+        <div style="
+          grid-column:1/-1;
+          padding:70px 0;
+          color:#777;
+          font-size:16px;
+        ">
+          No furniture found.
+        </div>
+      `;
+
+      return;
+    }
+
+    grid.innerHTML = list.map((item,index) => {
+
+      const image =
+        item.image ||
+        "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1000&q=78";
+
+      return `
+        <article class="product-card reveal">
+
+          <div class="product-image">
+
+            <img
+              src="${esc(image)}"
+              alt="${esc(item.name || "AKHI Furniture")}"
+              loading="lazy"
+              decoding="async"
+              ${index < 2 ? 'fetchpriority="high"' : ""}
+            >
+
+            ${
+              item.featured
+              ? `<span class="product-tag">Featured</span>`
+              : ""
+            }
+
+          </div>
+
+          <div class="product-info">
+
+            <div>
+
+              <div class="product-name">
+                ${esc(item.name || "AKHI Furniture")}
+              </div>
+
+              <div class="product-category">
+                ${esc(item.category || "Furniture")}
+              </div>
+
+            </div>
+
+            <div class="product-price">
+              ${price(item.price)}
+            </div>
+
+          </div>
+
+          <a
+            href="#contact"
+            class="product-link"
+            data-product="${esc(item.name || "")}"
+          >
+            Enquire →
+          </a>
+
+        </article>
+      `;
+
+    }).join("");
+
+    observeReveals();
+
+  }
+
+  /* =======================================================
+     PRODUCT CATEGORY CLICK
+  ======================================================= */
+
+  $$(".category-card").forEach(card => {
+
+    card.addEventListener("click",event => {
+
+      event.preventDefault();
+
+      const category = (
+        card.dataset.category || ""
+      ).toLowerCase();
+
+      const grid = $("#productGrid");
+
+      if(category){
+
+        const list = PRODUCTS.filter(item =>
+          String(item.category || "")
+            .toLowerCase()
+            .includes(category)
+        );
+
+        if(list.length){
+
+          grid.innerHTML = list.map((item,index) => {
+
+            return `
+              <article class="product-card reveal">
+
+                <div class="product-image">
+
+                  <img
+                    src="${esc(item.image || "")}"
+                    alt="${esc(item.name || "Furniture")}"
+                    loading="lazy"
+                    decoding="async"
+                  >
+
+                  ${
+                    item.featured
+                    ? `<span class="product-tag">Featured</span>`
+                    : ""
+                  }
+
+                </div>
+
+                <div class="product-info">
+
+                  <div>
+                    <div class="product-name">
+                      ${esc(item.name || "Furniture")}
+                    </div>
+
+                    <div class="product-category">
+                      ${esc(item.category || category)}
+                    </div>
+                  </div>
+
+                  <div class="product-price">
+                    ${price(item.price)}
+                  </div>
+
+                </div>
+
+                <a href="#contact" class="product-link">
+                  Enquire →
+                </a>
+
+              </article>
+            `;
+
+          }).join("");
+
+          observeReveals();
+
+        }
+
+      }
+
+      document
+        .querySelector("#shop")
+        ?.scrollIntoView({
+          behavior:"smooth"
+        });
+
+    });
+
+  });
+
+  /* =======================================================
+     PRODUCT ENQUIRY
+  ======================================================= */
+
+  document.addEventListener("click",event => {
+
+    const link = event.target.closest("[data-product]");
+
+    if(!link) return;
+
+    const product = link.dataset.product || "Furniture";
+
+    if(SETTINGS.whatsapp){
+
+      const message =
+        `Hello AKHI Furniture, I am interested in ${product}.`;
+
+      link.href =
+        `https://wa.me/${SETTINGS.whatsapp}?text=${encodeURIComponent(message)}`;
+
+      link.target = "_blank";
+      link.rel = "noopener";
+
+    }
+
+  });
+
+  /* =======================================================
+     HERO
+  ======================================================= */
+
+  function renderHero(){
+
+    const container = $("#heroSlides");
+
+    if(!container || !BANNERS.length) return;
+
+    container.innerHTML = BANNERS.map((item,index) => {
+
+      return `
+        <article class="hero-slide ${index === 0 ? "active" : ""}">
+
+          <img
+            src="${esc(item.image || "")}"
+            alt="${esc(item.title || "AKHI Furniture")}"
+            ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}
+            decoding="async"
+          >
+
+          <div class="hero-overlay"></div>
+
+          <div class="hero-content">
+
+            <div class="hero-copy">
+
+              <div class="eyebrow">
+                AKHI Furniture
+              </div>
+
+              <h1 class="hero-title">
+                ${formatHeroTitle(item.title || "Furniture with character.")}
+              </h1>
+
+              <p class="hero-description">
+                ${esc(item.subtitle || "Premium furniture for refined spaces.")}
+              </p>
+
+              <div class="hero-actions">
+
+                <a href="#shop" class="btn btn-red">
+                  Explore Collection →
+                </a>
+
+                <a href="#contact" class="btn btn-outline">
+                  Talk to AKHI
+                </a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </article>
+      `;
+
+    }).join("");
+
+    activeSlide = 0;
+
+    updateSlideUI();
+
+    startSlider();
+
+    preloadHeroImages();
+
+  }
+
+  function formatHeroTitle(title){
+
+    const safe = esc(title);
+
+    const words = safe.trim().split(/\s+/);
+
+    if(words.length < 2){
+      return safe;
+    }
+
+    const last = words.pop();
+
+    return `
+      ${words.join(" ")}<br>
+      <em>${last}</em>
+    `;
+
+  }
+
+  function updateSlideUI(){
+
+    const slides = $$(".hero-slide");
+
+    if(!slides.length) return;
+
+    slides.forEach((slide,index) => {
+      slide.classList.toggle(
+        "active",
+        index === activeSlide
+      );
+    });
+
+    const current = $("#slideCurrent");
+    const total = $("#slideTotal");
+
+    if(current){
+      current.textContent =
+        String(activeSlide + 1).padStart(2,"0");
+    }
+
+    if(total){
+      total.textContent =
+        String(slides.length).padStart(2,"0");
+    }
+
+  }
+
+  function goToSlide(index){
+
+    const slides = $$(".hero-slide");
+
+    if(!slides.length) return;
+
+    activeSlide =
+      (index + slides.length) % slides.length;
+
+    updateSlideUI();
+
+  }
+
+  function nextSlide(){
+    goToSlide(activeSlide + 1);
+  }
+
+  function prevSlide(){
+    goToSlide(activeSlide - 1);
+  }
+
+  $("#nextSlide")?.addEventListener("click",() => {
+    nextSlide();
+    startSlider();
+  });
+
+  $("#prevSlide")?.addEventListener("click",() => {
+    prevSlide();
+    startSlider();
+  });
+
+  function startSlider(){
+
+    clearInterval(slideTimer);
+
+    if(BANNERS.length < 2) return;
+
+    slideTimer = setInterval(nextSlide,6500);
+
+  }
+
+  function preloadHeroImages(){
+
+    idle(() => {
+
+      BANNERS
+        .slice(1)
+        .forEach(item => {
+
+          if(!item.image) return;
+
+          const image = new Image();
+
+          image.decoding = "async";
+          image.src = item.image;
+
+        });
+
+    });
+
+  }
+
+  /* =======================================================
+     REVEAL OBSERVER
+  ======================================================= */
+
+  let revealObserver = null;
+
+  function observeReveals(){
+
+    const elements = $$(".reveal:not(.visible)");
+
+    if(!elements.length) return;
+
+    if(
+      !("IntersectionObserver" in window)
+    ){
+
+      elements.forEach(el =>
+        el.classList.add("visible")
+      );
+
+      return;
+
+    }
+
+    if(!revealObserver){
+
+      revealObserver =
+        new IntersectionObserver(entries => {
+
+          entries.forEach(entry => {
+
+            if(entry.isIntersecting){
+
+              entry.target.classList.add("visible");
+
+              revealObserver.unobserve(
+                entry.target
+              );
+
+            }
+
+          });
+
+        },{
+          threshold:.08,
+          rootMargin:"0px 0px -50px 0px"
+        });
+
+    }
+
+    elements.forEach(el =>
+      revealObserver.observe(el)
+    );
+
+  }
+
+  observeReveals();
+
+  /* =======================================================
+     CUSTOM CURSOR
+  ======================================================= */
+
+  const dot = $("#cursorDot");
+  const ring = $("#cursorRing");
+
+  if(
+    dot &&
+    ring &&
+    window.matchMedia("(pointer:fine)").matches
+  ){
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+
+    let ringX = mouseX;
+    let ringY = mouseY;
+
+    window.addEventListener("mousemove",event => {
+
+      mouseX = event.clientX;
+      mouseY = event.clientY;
+
+      dot.style.left = mouseX + "px";
+      dot.style.top = mouseY + "px";
+
+    },{
+      passive:true
+    });
+
+    const animateCursor = () => {
+
+      ringX += (mouseX - ringX) * .14;
+      ringY += (mouseY - ringY) * .14;
+
+      ring.style.left = ringX + "px";
+      ring.style.top = ringY + "px";
+
+      requestAnimationFrame(animateCursor);
+
+    };
+
+    animateCursor();
+
+    document.addEventListener("mouseover",event => {
+
+      if(
+        event.target.closest("a,button,input")
+      ){
+        ring.classList.add("hover");
+      }else{
+        ring.classList.remove("hover");
+      }
+
+    });
+
+  }
+
+  /* =======================================================
+     CONTACT LINKS
+  ======================================================= */
+
+  function applyContactSettings(){
+
+    const whatsapp =
+      String(SETTINGS.whatsapp || "")
+        .replace(/\D/g,"");
+
+    const phone =
+      SETTINGS.phone ||
+      DEFAULT_SETTINGS.phone;
+
+    const email =
+      SETTINGS.email ||
+      DEFAULT_SETTINGS.email;
+
+    const waURL =
+      whatsapp
+      ? `https://wa.me/${whatsapp}`
+      : "#";
+
+    const waLinks = [
+      $("#whatsappLink"),
+      $("#footerWhatsapp"),
+      $("#floatingWhatsApp")
+    ];
+
+    waLinks.forEach(link => {
+
+      if(!link) return;
+
+      link.href = waURL;
+
+      if(waURL !== "#"){
+        link.target = "_blank";
+        link.rel = "noopener";
+      }
+
+    });
+
+    const callLinks = [
+      $("#callLink"),
+      $("#footerCall"),
+      $("#floatingCall")
+    ];
+
+    callLinks.forEach(link => {
+
+      if(link){
+        link.href = `tel:${phone}`;
+      }
+
+    });
+
+    const emailLink = $("#footerEmail");
+
+    if(emailLink){
+      emailLink.href = `mailto:${email}`;
+    }
+
+  }
+
+  applyContactSettings();
+
+  /* =======================================================
+     FIREBASE — DYNAMIC BACKGROUND LOADER
+     
+     THIS IS THE MAIN PERFORMANCE FIX.
+     
+     Firebase scripts are NOT in the critical path.
+  ======================================================= */
+
+  let firebasePromise = null;
+
+  function loadScript(src){
+
+    return new Promise((resolve,reject) => {
+
+      const existing =
+        document.querySelector(
+          `script[data-dynamic-src="${src}"]`
+        );
+
+      if(existing){
+
+        existing.addEventListener(
+          "load",
+          resolve,
+          {once:true}
+        );
+
+        existing.addEventListener(
+          "error",
+          reject,
+          {once:true}
+        );
+
+        return;
+
+      }
+
+      const script =
+        document.createElement("script");
+
+      script.src = src;
+      script.async = true;
+      script.dataset.dynamicSrc = src;
+
+      script.onload = resolve;
+      script.onerror = reject;
+
+      document.body.appendChild(script);
+
+    });
+
+  }
+
+  async function loadFirebase(){
+
+    if(window.firebase?.firestore){
+      return window.firebase;
+    }
+
+    if(firebasePromise){
+      return firebasePromise;
+    }
+
+    firebasePromise = (async () => {
+
+      /*
+       * firebase-config.js is also loaded in the
+       * background, so it cannot delay first paint.
+       */
+
+      await loadScript("./firebase-config.js");
+
+      if(!window.firebase){
+
+        await loadScript(
+          "https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"
+        );
+
+        await loadScript(
+          "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"
+        );
+
+      }
+
+      return window.firebase;
+
+    })();
+
+    return firebasePromise;
+
+  }
+
+  /* =======================================================
+     FIREBASE DATA NORMALIZATION
+  ======================================================= */
+
+  function normalizeDocs(snapshot){
+
+    if(!snapshot || typeof snapshot.forEach !== "function"){
+      return [];
+    }
+
+    const result = [];
+
+    snapshot.forEach(doc => {
+
+      result.push({
+        id:doc.id,
+        ...doc.data()
+      });
+
+    });
+
+    return result;
+
+  }
+
+  /* =======================================================
+     FIREBASE BACKGROUND HYDRATION
+  ======================================================= */
+
+  async function hydrateFromFirebase(){
+
+    try{
+
+      const firebase =
+        await loadFirebase();
+
+      if(!firebase){
+        return;
+      }
+
+      /*
+       * Support both:
+       *
+       * window.AKI_FIREBASE_CONFIG
+       * window.AKHI_FIREBASE_CONFIG
+       */
+
+      const config =
+        window.AKI_FIREBASE_CONFIG ||
+        window.AKHI_FIREBASE_CONFIG ||
+        window.FIREBASE_CONFIG;
+
+      if(
+        !config ||
+        !config.projectId
+      ){
+
+        console.warn(
+          "AKHI Firebase config not found."
+        );
+
+        return;
+      }
+
+      if(!firebase.apps?.length){
+
+        firebase.initializeApp(config);
+
+      }
+
+      const db = firebase.firestore();
+
+      /*
+       * IMPORTANT:
+       * These requests happen AFTER homepage is visible.
+       */
+
+      const requests = {
+
+        home:
+          db
+            .collection("siteContent")
+            .doc("home")
+            .get()
+            .catch(() => null),
+
+        settings:
+          db
+            .collection("siteContent")
+            .doc("settings")
+            .get()
+            .catch(() => null),
+
+        projects:
+          db
+            .collection("projects")
+            .get()
+            .catch(() => null),
+
+        banners:
+          db
+            .collection("banners")
+            .get()
+            .catch(() => null)
+
+      };
+
+      /*
+       * Do not block UI.
+       */
+
+      const [
+        homeSnap,
+        settingsSnap,
+        projectsSnap,
+        bannersSnap
+      ] = await Promise.all([
+        requests.home,
+        requests.settings,
+        requests.projects,
+        requests.banners
+      ]);
+
+      /* ---------------------------------------------------
+         SETTINGS
+      --------------------------------------------------- */
+
+      if(
+        settingsSnap &&
+        settingsSnap.exists
+      ){
+
+        SETTINGS = {
+          ...SETTINGS,
+          ...settingsSnap.data()
+        };
+
+        applyContactSettings();
+
+      }
+
+      /* ---------------------------------------------------
+         PRODUCTS
+      --------------------------------------------------- */
+
+      if(projectsSnap){
+
+        const remoteProducts =
+          normalizeDocs(projectsSnap)
+            .filter(item => {
+
+              const status =
+                String(item.status || "active")
+                  .toLowerCase();
+
+              return ![
+                "inactive",
+                "disabled",
+                "deleted",
+                "draft"
+              ].includes(status);
+
+            });
+
+        if(remoteProducts.length){
+
+          PRODUCTS = remoteProducts;
+
+          /*
+           * Render remote data only after it exists.
+           */
+
+          if(!searchInput?.value){
+
+            renderProducts("");
+
+          }else{
+
+            renderProducts(
+              searchInput.value
+            );
+
+          }
+
+        }
+
+      }
+
+      /* ---------------------------------------------------
+         BANNERS
+      --------------------------------------------------- */
+
+      if(bannersSnap){
+
+        const remoteBanners =
+          normalizeDocs(bannersSnap)
+            .filter(item => {
+
+              const status =
+                String(item.status || "active")
+                  .toLowerCase();
+
+              return ![
+                "inactive",
+                "disabled",
+                "deleted",
+                "draft"
+              ].includes(status);
+
+            })
+            .filter(item =>
+              item.image ||
+              item.imageUrl ||
+              item.bannerImage
+            )
+            .map(item => ({
+              ...item,
+              image:
+                item.image ||
+                item.imageUrl ||
+                item.bannerImage
+            }));
+
+        if(remoteBanners.length){
+
+          BANNERS = remoteBanners;
+
+          renderHero();
+
+        }
+
+      }
+
+      /* ---------------------------------------------------
+         HOME CONTENT
+      --------------------------------------------------- */
+
+      if(
+        homeSnap &&
+        homeSnap.exists
+      ){
+
+        applyHomeContent(
+          homeSnap.data()
+        );
+
+      }
+
+    }catch(error){
+
+      /*
+       * Firebase failure must NEVER break
+       * the public homepage.
+       */
+
+      console.warn(
+        "AKHI background Firebase load skipped:",
+        error
+      );
+
+    }
+
+  }
+
+  /* =======================================================
+     HOME CONTENT
+  ======================================================= */
+
+  function applyHomeContent(data){
+
+    if(!data || typeof data !== "object"){
+      return;
+    }
+
+    const mappings = [
+
+      {
+        keys:["heroTitle","title"],
+        selector:".hero-title"
+      },
+
+      {
+        keys:["heroDescription","description"],
+        selector:".hero-description"
+      }
+
+    ];
+
+    mappings.forEach(map => {
+
+      const value =
+        map.keys
+          .map(key => data[key])
+          .find(value =>
+            value !== undefined &&
+            value !== null &&
+            value !== ""
+          );
+
+      if(value === undefined) return;
+
+      const el = $(map.selector);
+
+      if(el){
+
+        if(
+          map.selector === ".hero-title"
+        ){
+
+          el.innerHTML =
+            formatHeroTitle(value);
+
+        }else{
+
+          el.textContent = value;
+
+        }
+
+      }
+
+    });
+
+  }
+
+  /* =======================================================
+     START FIREBASE ONLY AFTER FIRST RESPONSE
+  ======================================================= */
+
+  const startBackgroundFirebase = () => {
+
+    idle(() => {
+
+      /*
+       * Small extra breathing room lets the browser
+       * paint the first screen before Firebase starts.
+       */
+
+      setTimeout(
+        hydrateFromFirebase,
+        60
+      );
+
+    });
+
+  };
+
+  if(
+    document.readyState === "complete"
+  ){
+
+    startBackgroundFirebase();
+
+  }else{
+
+    window.addEventListener(
+      "load",
+      startBackgroundFirebase,
+      {once:true}
+    );
+
+  }
+
+  /* =======================================================
+     INITIAL HERO PRELOAD
+     
+     Next slides wait until browser is idle.
+  ======================================================= */
+
+  idle(() => {
+
+    if(BANNERS.length > 1){
+      preloadHeroImages();
+    }
+
+  });
+
+  /* =======================================================
+     TOUCH SWIPE HERO
+  ======================================================= */
+
+  let touchStartX = 0;
+
+  const hero = $(".hero");
+
+  hero?.addEventListener("touchstart",event => {
+
+    touchStartX =
+      event.changedTouches[0].clientX;
+
+  },{
+    passive:true
+  });
+
+  hero?.addEventListener("touchend",event => {
+
+    const touchEndX =
+      event.changedTouches[0].clientX;
+
+    const difference =
+      touchEndX - touchStartX;
+
+    if(Math.abs(difference) < 45){
+      return;
+    }
+
+    if(difference < 0){
+      nextSlide();
+    }else{
+      prevSlide();
+    }
+
+    startSlider();
+
+  },{
+    passive:true
+  });
+
+  /* =======================================================
+     HERO KEYBOARD
+  ======================================================= */
+
+  document.addEventListener("keydown",event => {
+
+    if(
+      event.target.matches("input,textarea")
+    ){
+      return;
+    }
+
+    if(event.key === "ArrowRight"){
+      nextSlide();
+      startSlider();
+    }
+
+    if(event.key === "ArrowLeft"){
+      prevSlide();
+      startSlider();
+    }
+
+  });
+
+})();
+</script>
+
+</body>
+</html>
