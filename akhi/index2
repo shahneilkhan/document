@@ -1,0 +1,3760 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<meta name="theme-color" content="#0a0a0a">
+<meta name="description" content="AKHI Furniture — thoughtfully selected furniture for refined homes, offices and modern workspaces.">
+<meta name="robots" content="index,follow">
+
+<title>AKHI Furniture — Furniture, Thoughtfully Made.</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --red:#e2262d;
+  --red2:#ff3037;
+  --red-dark:#ad151b;
+
+  --black:#090909;
+  --black2:#101010;
+  --ink:#151515;
+
+  --paper:#f8f6f2;
+  --paper2:#efebe5;
+  --white:#fff;
+
+  --muted:#777;
+  --muted2:#a09d98;
+
+  --line:rgba(0,0,0,.1);
+  --line-light:rgba(255,255,255,.12);
+
+  --max:1500px;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --ease2:cubic-bezier(.16,1,.3,1);
+
+  --header:86px;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+  background:var(--black);
+}
+
+body{
+  margin:0;
+  font-family:Barlow,system-ui,sans-serif;
+  color:var(--ink);
+  background:var(--paper);
+  line-height:1.5;
+  overflow-x:hidden;
+  cursor:auto;
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:9998;
+  pointer-events:none;
+  opacity:.026;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+button,
+input{
+  font:inherit;
+}
+
+button{
+  border:0;
+}
+
+img{
+  display:block;
+  max-width:100%;
+}
+
+svg{
+  width:22px;
+  height:22px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.5;
+}
+
+::selection{
+  color:#fff;
+  background:var(--red);
+}
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+.loader{
+  position:fixed;
+  inset:0;
+  z-index:10000;
+  display:grid;
+  place-items:center;
+  background:#090909;
+  color:#fff;
+  transition:
+    opacity .9s var(--ease),
+    visibility .9s;
+}
+
+.loader.done{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.loader-inner{
+  width:min(260px,70vw);
+  text-align:center;
+}
+
+.loader-logo{
+  font-size:48px;
+  font-weight:700;
+  letter-spacing:.05em;
+}
+
+.loader-line{
+  position:relative;
+  height:1px;
+  margin-top:25px;
+  background:rgba(255,255,255,.15);
+  overflow:hidden;
+}
+
+.loader-line i{
+  position:absolute;
+  inset:0;
+  transform:translateX(-100%);
+  background:var(--red);
+  animation:loadLine 1.4s var(--ease) forwards;
+}
+
+.loader-count{
+  margin-top:12px;
+  color:#777;
+  font-size:10px;
+  letter-spacing:.25em;
+  text-transform:uppercase;
+}
+
+@keyframes loadLine{
+  to{
+    transform:translateX(0);
+  }
+}
+
+/* =========================================================
+   SCROLL PROGRESS
+========================================================= */
+
+.progress{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:10001;
+  width:0;
+  height:2px;
+  background:var(--red);
+  box-shadow:0 0 15px rgba(226,38,45,.7);
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.hd{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:500;
+  height:var(--header);
+  display:flex;
+  align-items:center;
+  padding:0 34px;
+  color:#fff;
+  transition:
+    height .55s var(--ease),
+    background .55s var(--ease),
+    color .55s var(--ease),
+    box-shadow .55s var(--ease);
+}
+
+.hd:after{
+  content:"";
+  position:absolute;
+  left:34px;
+  right:34px;
+  bottom:0;
+  height:1px;
+  background:rgba(255,255,255,.18);
+  transition:.4s;
+}
+
+.hd.solid{
+  height:72px;
+  color:var(--ink);
+  background:rgba(248,246,242,.91);
+  backdrop-filter:blur(24px) saturate(140%);
+  -webkit-backdrop-filter:blur(24px) saturate(140%);
+  box-shadow:0 15px 45px rgba(0,0,0,.07);
+}
+
+.hd.solid:after{
+  background:var(--line);
+}
+
+.logo{
+  position:relative;
+  z-index:2;
+  width:104px;
+  height:48px;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  background:var(--red);
+  color:#fff;
+  font-size:28px;
+  font-weight:700;
+  letter-spacing:.045em;
+}
+
+.logo:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    110deg,
+    transparent 20%,
+    rgba(255,255,255,.3) 50%,
+    transparent 80%
+  );
+  transform:translateX(-120%);
+  transition:transform .8s var(--ease);
+}
+
+.logo:hover:before{
+  transform:translateX(120%);
+}
+
+.logo:after{
+  content:"";
+  position:absolute;
+  inset:5px;
+  border:1px solid rgba(255,255,255,.25);
+}
+
+.nv{
+  display:flex;
+  align-items:center;
+  gap:34px;
+  margin-left:auto;
+  margin-right:42px;
+  font-size:12px;
+  font-weight:500;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+
+.nv a,
+.nv button{
+  position:relative;
+  padding:8px 0;
+  color:inherit;
+  background:none;
+  cursor:pointer;
+  opacity:.82;
+}
+
+.nv a:after,
+.nv button:after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:1px;
+  width:0;
+  height:1px;
+  background:currentColor;
+  transition:width .4s var(--ease);
+}
+
+.nv a:hover,
+.nv button:hover{
+  opacity:1;
+}
+
+.nv a:hover:after,
+.nv button:hover:after{
+  width:100%;
+}
+
+.ic{
+  display:flex;
+  align-items:center;
+  gap:21px;
+}
+
+.ic button,
+.ic a{
+  display:grid;
+  place-items:center;
+  color:inherit;
+  background:none;
+  cursor:pointer;
+}
+
+.ic svg{
+  transition:transform .4s var(--ease);
+}
+
+.ic button:hover svg,
+.ic a:hover svg{
+  transform:translateY(-2px) scale(1.08);
+}
+
+.mm{
+  display:none!important;
+}
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.sp{
+  position:fixed;
+  top:var(--header);
+  left:0;
+  right:0;
+  z-index:450;
+  padding:30px 34px 38px;
+  background:rgba(248,246,242,.96);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(25px);
+  -webkit-backdrop-filter:blur(25px);
+  opacity:0;
+  transform:translateY(-18px);
+  pointer-events:none;
+  transition:.5s var(--ease);
+}
+
+.sp.on{
+  opacity:1;
+  transform:none;
+  pointer-events:auto;
+}
+
+.search-inner{
+  width:min(1100px,100%);
+  margin:auto;
+}
+
+.search-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+}
+
+.search-top span{
+  color:var(--red);
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+
+.search-close{
+  background:none;
+  cursor:pointer;
+  color:#777;
+  font-size:12px;
+}
+
+.sp input{
+  width:100%;
+  padding:13px 0 18px;
+  border:0;
+  border-bottom:1px solid #999;
+  outline:none;
+  background:none;
+  color:var(--ink);
+  font-size:clamp(28px,4vw,52px);
+  font-weight:300;
+  letter-spacing:-.035em;
+}
+
+.sp input::placeholder{
+  color:#bbb;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+  position:relative;
+  height:100svh;
+  min-height:700px;
+  overflow:hidden;
+  background:#0b0b0b;
+  color:#fff;
+}
+
+.hero-bg{
+  position:absolute;
+  inset:0;
+}
+
+.sl{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  opacity:0;
+  visibility:hidden;
+  transition:
+    opacity 1s ease,
+    visibility 1s;
+}
+
+.sl.on{
+  opacity:1;
+  visibility:visible;
+  z-index:3;
+}
+
+.sl>img{
+  position:absolute;
+  inset:-4%;
+  width:108%;
+  height:108%;
+  object-fit:cover;
+  filter:saturate(.72) contrast(1.04);
+  transform:scale(1.09);
+  transition:transform 8s cubic-bezier(.2,.7,.2,1);
+}
+
+.sl.on>img{
+  transform:scale(1);
+}
+
+.sl:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,.83) 0%,
+      rgba(0,0,0,.5) 38%,
+      rgba(0,0,0,.12) 75%,
+      rgba(0,0,0,.28) 100%
+    );
+}
+
+.sl:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.45),
+      transparent 30%,
+      transparent 65%,
+      rgba(0,0,0,.5)
+    );
+}
+
+.hero-content{
+  position:relative;
+  z-index:8;
+  width:min(var(--max),100%);
+  margin:auto;
+  padding:100px 7vw 90px;
+}
+
+.hero-kicker{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  margin-bottom:26px;
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.32em;
+  text-transform:uppercase;
+}
+
+.hero-kicker:before{
+  content:"";
+  width:50px;
+  height:1px;
+  background:var(--red);
+}
+
+.hero-title{
+  max-width:1050px;
+  font-size:clamp(55px,8vw,125px);
+  line-height:.87;
+  font-weight:400;
+  letter-spacing:-.055em;
+}
+
+.hero-title em{
+  font-family:"DM Serif Display",serif;
+  font-weight:400;
+  letter-spacing:-.035em;
+}
+
+.hero-description{
+  max-width:540px;
+  margin:35px 0 0 8vw;
+  color:rgba(255,255,255,.78);
+  font-size:clamp(17px,1.7vw,23px);
+  line-height:1.3;
+  font-weight:300;
+}
+
+.hero-description:before{
+  content:"";
+  position:absolute;
+  margin-left:-8vw;
+  margin-top:11px;
+  width:5vw;
+  height:1px;
+  background:rgba(255,255,255,.5);
+}
+
+.hero-actions{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:38px 0 0 8vw;
+}
+
+.b{
+  min-width:175px;
+  height:54px;
+  padding:0 26px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  background:var(--red);
+  color:#fff;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  transition:
+    transform .45s var(--ease),
+    background .35s,
+    box-shadow .45s var(--ease);
+}
+
+.b:hover{
+  background:var(--red2);
+  transform:translateY(-5px);
+  box-shadow:0 18px 40px rgba(226,38,45,.3);
+}
+
+.b.ghost{
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.45);
+  backdrop-filter:blur(10px);
+}
+
+.b.ghost:hover{
+  background:#fff;
+  color:#111;
+  box-shadow:none;
+}
+
+.hero-bottom{
+  position:absolute;
+  left:7vw;
+  right:7vw;
+  bottom:35px;
+  z-index:10;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+}
+
+.hero-place{
+  color:rgba(255,255,255,.62);
+  font-size:9px;
+  letter-spacing:.23em;
+  text-transform:uppercase;
+}
+
+.hero-counter{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+.hero-counter strong{
+  font-size:12px;
+  font-weight:400;
+  letter-spacing:.15em;
+}
+
+.hero-line{
+  width:110px;
+  height:1px;
+  background:rgba(255,255,255,.25);
+  position:relative;
+}
+
+.hero-line i{
+  position:absolute;
+  top:0;
+  left:0;
+  width:33%;
+  height:100%;
+  background:#fff;
+  transition:width .5s var(--ease);
+}
+
+.hero-scroll{
+  position:absolute;
+  right:28px;
+  top:50%;
+  z-index:10;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  color:rgba(255,255,255,.65);
+  font-size:9px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  transform:rotate(90deg) translateX(50%);
+  transform-origin:right center;
+}
+
+.hero-scroll i{
+  display:block;
+  width:40px;
+  height:1px;
+  background:rgba(255,255,255,.4);
+}
+
+/* =========================================================
+   MARQUEE
+========================================================= */
+
+.marquee{
+  overflow:hidden;
+  background:var(--red);
+  color:#fff;
+  white-space:nowrap;
+}
+
+.marquee-track{
+  width:max-content;
+  display:flex;
+  align-items:center;
+  gap:45px;
+  padding:15px 0;
+  animation:marquee 28s linear infinite;
+}
+
+.marquee span{
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+
+.marquee b{
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:#fff;
+}
+
+@keyframes marquee{
+  to{
+    transform:translateX(-50%);
+  }
+}
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.intro{
+  padding:150px 30px 145px;
+  background:var(--paper);
+}
+
+.intro-inner{
+  width:min(1150px,100%);
+  margin:auto;
+}
+
+.intro-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:30px;
+  margin-bottom:45px;
+}
+
+.intro-label{
+  color:var(--red);
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.25em;
+  text-transform:uppercase;
+}
+
+.intro-index{
+  color:#aaa;
+  font-size:10px;
+  letter-spacing:.15em;
+}
+
+.intro h2{
+  max-width:1100px;
+  font-size:clamp(42px,6vw,82px);
+  line-height:.95;
+  font-weight:300;
+  letter-spacing:-.055em;
+}
+
+.intro h2 em{
+  font-family:"DM Serif Display",serif;
+  color:#777;
+}
+
+.intro-bottom{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:80px;
+  margin-top:50px;
+  padding-left:18%;
+}
+
+.intro-bottom p{
+  max-width:560px;
+  color:#777;
+  font-size:16px;
+  line-height:1.7;
+}
+
+.intro-sign{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  color:#999;
+  font-size:10px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+
+.intro-sign i{
+  width:45px;
+  height:1px;
+  background:var(--red);
+}
+
+/* =========================================================
+   SECTION HEAD
+========================================================= */
+
+.shop{
+  padding:40px 32px 140px;
+  background:var(--paper);
+}
+
+.wrap{
+  width:min(var(--max),100%);
+  margin:auto;
+}
+
+.section-head{
+  display:grid;
+  grid-template-columns:1.3fr .7fr;
+  gap:60px;
+  align-items:end;
+  padding-bottom:42px;
+  border-bottom:1px solid var(--line);
+}
+
+.section-kicker{
+  margin-bottom:13px;
+  color:var(--red);
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.25em;
+  text-transform:uppercase;
+}
+
+.section-title{
+  font-size:clamp(43px,5.7vw,78px);
+  line-height:.91;
+  font-weight:300;
+  letter-spacing:-.055em;
+}
+
+.section-title em{
+  font-family:"DM Serif Display",serif;
+  color:#777;
+}
+
+.section-description{
+  max-width:340px;
+  color:#777;
+  font-size:14px;
+  line-height:1.7;
+}
+
+/* =========================================================
+   CATEGORY EDITORIAL
+========================================================= */
+
+.categories{
+  display:grid;
+  grid-template-columns:1.5fr 1fr 1fr;
+  grid-template-rows:280px 280px;
+  gap:3px;
+  margin-top:3px;
+}
+
+.category{
+  position:relative;
+  overflow:hidden;
+  background:#ddd;
+  color:#fff;
+  cursor:pointer;
+  text-align:left;
+}
+
+.category:first-child{
+  grid-row:span 2;
+}
+
+.category-media{
+  position:absolute;
+  inset:0;
+}
+
+.category-media:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(
+      0deg,
+      rgba(0,0,0,.78),
+      rgba(0,0,0,.05) 70%
+    );
+}
+
+.category img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform 1.2s var(--ease);
+}
+
+.category:hover img{
+  transform:scale(1.08);
+}
+
+.category-content{
+  position:absolute;
+  z-index:2;
+  left:25px;
+  right:25px;
+  bottom:24px;
+}
+
+.category-number{
+  display:block;
+  margin-bottom:9px;
+  color:rgba(255,255,255,.62);
+  font-size:9px;
+  letter-spacing:.2em;
+}
+
+.category h3{
+  font-size:27px;
+  line-height:1;
+  font-weight:400;
+}
+
+.category:first-child h3{
+  font-size:42px;
+}
+
+.category-arrow{
+  position:absolute;
+  right:23px;
+  bottom:23px;
+  width:38px;
+  height:38px;
+  z-index:3;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,.55);
+  border-radius:50%;
+  transition:.5s var(--ease);
+}
+
+.category:hover .category-arrow{
+  background:#fff;
+  color:#111;
+  transform:rotate(-45deg);
+}
+
+/* =========================================================
+   PRODUCT TOOLBAR
+========================================================= */
+
+.toolbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:25px 0 19px;
+  border-bottom:1px solid var(--line);
+}
+
+.toolbar-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.toolbar-left span{
+  color:#777;
+  font-size:10px;
+  letter-spacing:.17em;
+  text-transform:uppercase;
+}
+
+.toolbar-left strong{
+  color:#111;
+  font-weight:500;
+}
+
+.toolbar-right{
+  color:#aaa;
+  font-size:10px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:58px 20px;
+  padding-top:42px;
+}
+
+.product{
+  min-width:0;
+}
+
+.product-media{
+  position:relative;
+  aspect-ratio:1/1.13;
+  overflow:hidden;
+  background:#e8e4df;
+}
+
+.product-media:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border:1px solid rgba(0,0,0,.05);
+  pointer-events:none;
+}
+
+.product-media img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:
+    transform 1s var(--ease),
+    filter .7s;
+}
+
+.product:hover .product-media img{
+  transform:scale(1.055);
+  filter:saturate(1.03);
+}
+
+.product-tag{
+  position:absolute;
+  top:13px;
+  left:13px;
+  z-index:4;
+  padding:6px 10px;
+  background:var(--red);
+  color:#fff;
+  font-size:8px;
+  font-weight:600;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+
+.product-number{
+  position:absolute;
+  right:15px;
+  top:15px;
+  z-index:3;
+  color:#fff;
+  font-size:9px;
+  letter-spacing:.15em;
+  text-shadow:0 2px 10px rgba(0,0,0,.5);
+}
+
+.product-info{
+  padding-top:17px;
+}
+
+.product-category{
+  color:#999;
+  font-size:9px;
+  letter-spacing:.17em;
+  text-transform:uppercase;
+}
+
+.product h3{
+  margin-top:7px;
+  font-size:19px;
+  line-height:1.15;
+  font-weight:500;
+}
+
+.product-price{
+  margin-top:8px;
+  color:#555;
+  font-size:15px;
+}
+
+.product-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:14px;
+}
+
+.enquire{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:#111;
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  transition:.3s;
+}
+
+.enquire svg{
+  width:16px;
+  height:16px;
+  transition:.4s var(--ease);
+}
+
+.enquire:hover{
+  color:var(--red);
+}
+
+.enquire:hover svg{
+  transform:translateX(5px);
+}
+
+.empty{
+  grid-column:1/-1;
+  padding:90px 20px;
+  text-align:center;
+  color:#999;
+}
+
+/* =========================================================
+   STATEMENT
+========================================================= */
+
+.statement{
+  position:relative;
+  overflow:hidden;
+  padding:155px 30px;
+  background:var(--black);
+  color:#fff;
+}
+
+.statement:before{
+  content:"AKHI";
+  position:absolute;
+  right:-5vw;
+  bottom:-7vw;
+  color:rgba(255,255,255,.025);
+  font-size:29vw;
+  font-weight:700;
+  line-height:.7;
+  pointer-events:none;
+}
+
+.statement-inner{
+  position:relative;
+  z-index:2;
+  width:min(1200px,100%);
+  margin:auto;
+  display:grid;
+  grid-template-columns:.5fr 1.5fr;
+  gap:80px;
+}
+
+.statement-label{
+  color:var(--red);
+  font-size:10px;
+  letter-spacing:.27em;
+  text-transform:uppercase;
+}
+
+.statement h2{
+  max-width:950px;
+  font-size:clamp(45px,6.2vw,86px);
+  line-height:.91;
+  font-weight:300;
+  letter-spacing:-.055em;
+}
+
+.statement h2 em{
+  font-family:"DM Serif Display",serif;
+  color:#888;
+}
+
+.statement-copy{
+  max-width:580px;
+  margin-top:35px;
+  color:#888;
+  font-size:16px;
+  line-height:1.7;
+}
+
+/* =========================================================
+   EXPERIENCE / NUMBERS
+========================================================= */
+
+.experience{
+  padding:110px 30px;
+  background:var(--paper2);
+}
+
+.experience-grid{
+  width:min(1100px,100%);
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:var(--line);
+}
+
+.experience-item{
+  min-height:240px;
+  padding:38px;
+  background:var(--paper2);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+.experience-number{
+  color:var(--red);
+  font-family:"DM Serif Display",serif;
+  font-size:60px;
+  line-height:1;
+}
+
+.experience-item h3{
+  font-size:16px;
+  font-weight:500;
+}
+
+.experience-item p{
+  margin-top:8px;
+  color:#777;
+  font-size:13px;
+}
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.cta{
+  position:relative;
+  overflow:hidden;
+  padding:155px 30px;
+  background:#e9e4dd;
+}
+
+.cta:before{
+  content:"";
+  position:absolute;
+  width:600px;
+  height:600px;
+  left:-250px;
+  top:-300px;
+  border-radius:50%;
+  background:rgba(226,38,45,.08);
+  filter:blur(40px);
+}
+
+.cta:after{
+  content:"AKHI";
+  position:absolute;
+  right:-4vw;
+  bottom:-8vw;
+  color:rgba(0,0,0,.035);
+  font-size:25vw;
+  line-height:.7;
+  font-weight:700;
+  pointer-events:none;
+}
+
+.cta-inner{
+  position:relative;
+  z-index:2;
+  width:min(1000px,100%);
+  margin:auto;
+  text-align:center;
+}
+
+.cta-label{
+  color:var(--red);
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+}
+
+.cta h2{
+  max-width:900px;
+  margin:25px auto;
+  font-size:clamp(48px,6.8vw,92px);
+  line-height:.9;
+  font-weight:300;
+  letter-spacing:-.055em;
+}
+
+.cta p{
+  max-width:560px;
+  margin:0 auto 32px;
+  color:#777;
+  font-size:15px;
+  line-height:1.7;
+}
+
+.cta .b{
+  margin:auto;
+}
+
+/* =========================================================
+   FLOATING WHATSAPP
+========================================================= */
+
+.chat{
+  position:fixed;
+  right:26px;
+  bottom:26px;
+  z-index:700;
+  width:60px;
+  height:60px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:var(--red);
+  color:#fff;
+  box-shadow:
+    0 15px 40px rgba(226,38,45,.3),
+    0 0 0 0 rgba(226,38,45,.25);
+  transition:.45s var(--ease);
+  animation:pulse 3s infinite;
+}
+
+.chat:hover{
+  transform:translateY(-5px) scale(1.06);
+}
+
+.chat svg{
+  width:26px;
+  height:26px;
+  fill:#fff;
+  stroke:none;
+}
+
+@keyframes pulse{
+  0%,72%,100%{
+    box-shadow:
+      0 15px 40px rgba(226,38,45,.3),
+      0 0 0 0 rgba(226,38,45,.25);
+  }
+  85%{
+    box-shadow:
+      0 15px 40px rgba(226,38,45,.3),
+      0 0 0 14px rgba(226,38,45,0);
+  }
+}
+
+.call{
+  position:fixed;
+  left:25px;
+  bottom:25px;
+  z-index:700;
+  display:none;
+  align-items:center;
+  gap:9px;
+  padding:11px 15px;
+  background:rgba(0,0,0,.88);
+  color:#fff;
+  backdrop-filter:blur(12px);
+  font-size:11px;
+  letter-spacing:.05em;
+  box-shadow:0 15px 35px rgba(0,0,0,.2);
+}
+
+.call svg{
+  width:15px;
+  height:15px;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+  padding:95px 30px 25px;
+  background:#090909;
+  color:#888;
+}
+
+.footer-grid{
+  width:min(var(--max),100%);
+  margin:auto;
+  display:grid;
+  grid-template-columns:1.7fr .7fr .8fr;
+  gap:80px;
+}
+
+.footer-logo{
+  display:inline-block;
+  margin-bottom:23px;
+  color:#fff;
+  font-size:53px;
+  line-height:1;
+  font-weight:700;
+  letter-spacing:.04em;
+}
+
+.footer-brand p{
+  max-width:380px;
+  color:#666;
+  font-size:14px;
+  line-height:1.7;
+}
+
+footer h4{
+  margin-bottom:18px;
+  color:#fff;
+  font-size:10px;
+  font-weight:500;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+
+footer ul{
+  list-style:none;
+}
+
+footer li{
+  padding:4px 0;
+  font-size:13px;
+}
+
+footer a{
+  transition:.3s;
+}
+
+footer a:hover{
+  color:#fff;
+}
+
+.footer-bottom{
+  width:min(var(--max),100%);
+  margin:70px auto 0;
+  padding-top:19px;
+  border-top:1px solid rgba(255,255,255,.1);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
+  font-size:10px;
+  letter-spacing:.04em;
+}
+
+/* =========================================================
+   REVEAL
+========================================================= */
+
+.reveal{
+  opacity:0;
+  transform:translateY(35px);
+  transition:
+    opacity 1s var(--ease),
+    transform 1s var(--ease);
+}
+
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+
+.reveal-delay-1{
+  transition-delay:.08s;
+}
+
+.reveal-delay-2{
+  transition-delay:.16s;
+}
+
+.reveal-delay-3{
+  transition-delay:.24s;
+}
+
+/* =========================================================
+   CURSOR
+========================================================= */
+
+.cursor-dot,
+.cursor-ring{
+  position:fixed;
+  left:0;
+  top:0;
+  z-index:10002;
+  pointer-events:none;
+  opacity:0;
+}
+
+.cursor-dot{
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:var(--red);
+  transform:translate(-50%,-50%);
+}
+
+.cursor-ring{
+  width:30px;
+  height:30px;
+  border:1px solid rgba(226,38,45,.65);
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  transition:
+    width .3s var(--ease),
+    height .3s var(--ease),
+    background .3s,
+    border-color .3s;
+}
+
+.cursor-ring.big{
+  width:58px;
+  height:58px;
+  background:rgba(226,38,45,.06);
+  border-color:var(--red);
+}
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible{
+  outline:2px solid var(--red);
+  outline-offset:4px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1100px){
+
+  .nv{
+    gap:21px;
+    margin-right:25px;
+  }
+
+  .categories{
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:320px 260px;
+  }
+
+  .category:first-child{
+    grid-row:span 1;
+    grid-column:span 2;
+  }
+
+  .products{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .footer-grid{
+    grid-template-columns:1.3fr 1fr 1fr;
+  }
+}
+
+@media(max-width:850px){
+
+  :root{
+    --header:74px;
+  }
+
+  .hd{
+    padding:0 18px;
+  }
+
+  .hd:after{
+    left:18px;
+    right:18px;
+  }
+
+  .logo{
+    width:88px;
+    height:42px;
+    font-size:24px;
+  }
+
+  .nv{
+    position:fixed;
+    top:74px;
+    left:0;
+    right:0;
+    margin:0;
+    padding:10px 24px 25px;
+    display:none;
+    flex-direction:column;
+    align-items:stretch;
+    gap:0;
+    color:#111;
+    background:rgba(248,246,242,.97);
+    backdrop-filter:blur(25px);
+    box-shadow:0 25px 50px rgba(0,0,0,.12);
+  }
+
+  .nv.on{
+    display:flex;
+  }
+
+  .nv a,
+  .nv button{
+    padding:15px 0;
+    border-bottom:1px solid var(--line);
+    text-align:left;
+  }
+
+  .mm{
+    display:grid!important;
+  }
+
+  .sp{
+    padding-left:20px;
+    padding-right:20px;
+  }
+
+  .hero{
+    min-height:650px;
+  }
+
+  .hero-content{
+    padding:100px 24px 80px;
+  }
+
+  .hero-title{
+    font-size:clamp(50px,12vw,80px);
+  }
+
+  .hero-description{
+    margin-left:0;
+    font-size:18px;
+  }
+
+  .hero-description:before{
+    display:none;
+  }
+
+  .hero-actions{
+    margin-left:0;
+    flex-wrap:wrap;
+  }
+
+  .hero-bottom{
+    left:24px;
+    right:24px;
+  }
+
+  .hero-scroll{
+    display:none;
+  }
+
+  .intro{
+    padding:95px 24px;
+  }
+
+  .intro-bottom{
+    grid-template-columns:1fr;
+    gap:25px;
+    padding-left:0;
+  }
+
+  .shop{
+    padding-left:20px;
+    padding-right:20px;
+  }
+
+  .section-head{
+    grid-template-columns:1fr;
+    gap:25px;
+  }
+
+  .categories{
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:270px 210px;
+  }
+
+  .category:first-child{
+    grid-column:span 2;
+  }
+
+  .category h3{
+    font-size:21px;
+  }
+
+  .category:first-child h3{
+    font-size:31px;
+  }
+
+  .statement{
+    padding:100px 24px;
+  }
+
+  .statement-inner{
+    grid-template-columns:1fr;
+    gap:30px;
+  }
+
+  .experience{
+    padding:80px 20px;
+  }
+
+  .experience-grid{
+    grid-template-columns:1fr;
+  }
+
+  .experience-item{
+    min-height:180px;
+  }
+
+  .cta{
+    padding:100px 24px;
+  }
+
+  .footer-grid{
+    grid-template-columns:1fr;
+    gap:45px;
+  }
+
+  footer{
+    padding-left:20px;
+    padding-right:20px;
+  }
+}
+
+@media(max-width:550px){
+
+  .ic{
+    gap:14px;
+  }
+
+  #bag{
+    display:none;
+  }
+
+  .hero{
+    min-height:600px;
+  }
+
+  .hero-content{
+    padding:90px 20px 75px;
+  }
+
+  .hero-title{
+    font-size:clamp(45px,14vw,68px);
+  }
+
+  .hero-description{
+    font-size:16px;
+    margin-top:25px;
+  }
+
+  .hero-actions{
+    margin-top:27px;
+  }
+
+  .b{
+    min-width:145px;
+    height:48px;
+    padding:0 18px;
+    font-size:9px;
+  }
+
+  .hero-place{
+    display:none;
+  }
+
+  .hero-counter{
+    margin-left:auto;
+  }
+
+  .hero-line{
+    width:75px;
+  }
+
+  .marquee-track{
+    gap:28px;
+  }
+
+  .intro{
+    padding:80px 20px;
+  }
+
+  .intro h2{
+    font-size:43px;
+  }
+
+  .intro-bottom{
+    margin-top:32px;
+  }
+
+  .categories{
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:230px 180px;
+    gap:2px;
+  }
+
+  .category:first-child{
+    grid-column:span 2;
+  }
+
+  .category-content{
+    left:15px;
+    right:12px;
+    bottom:15px;
+  }
+
+  .category h3,
+  .category:first-child h3{
+    font-size:19px;
+  }
+
+  .category-arrow{
+    width:31px;
+    height:31px;
+    right:11px;
+    bottom:12px;
+  }
+
+  .products{
+    grid-template-columns:1fr 1fr;
+    gap:38px 10px;
+    padding-top:30px;
+  }
+
+  .product h3{
+    font-size:15px;
+  }
+
+  .product-price{
+    font-size:13px;
+  }
+
+  .product-bottom{
+    display:block;
+  }
+
+  .product-number{
+    display:none;
+  }
+
+  .enquire{
+    margin-top:2px;
+    font-size:9px;
+  }
+
+  .toolbar-right{
+    display:none;
+  }
+
+  .statement{
+    padding:85px 20px;
+  }
+
+  .statement h2{
+    font-size:43px;
+  }
+
+  .statement-copy{
+    font-size:14px;
+  }
+
+  .experience-item{
+    padding:30px;
+  }
+
+  .experience-number{
+    font-size:50px;
+  }
+
+  .cta{
+    padding:90px 20px;
+  }
+
+  .cta h2{
+    font-size:45px;
+  }
+
+  .chat{
+    width:56px;
+    height:56px;
+    right:15px;
+    bottom:15px;
+  }
+
+  .call{
+    left:12px;
+    bottom:12px;
+  }
+
+  .footer-logo{
+    font-size:45px;
+  }
+
+  .footer-bottom{
+    margin-top:50px;
+  }
+}
+
+@media(pointer:coarse){
+
+  .cursor-dot,
+  .cursor-ring{
+    display:none;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+
+  html{
+    scroll-behavior:auto;
+  }
+
+  *,
+  *:before,
+  *:after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
+
+  .loader{
+    transition:none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     LOADER
+========================================================= -->
+
+<div class="loader" id="loader">
+  <div class="loader-inner">
+    <div class="loader-logo">AKHI</div>
+    <div class="loader-line"><i></i></div>
+    <div class="loader-count">Furniture · Thoughtfully Made</div>
+  </div>
+</div>
+
+<div class="progress" id="progress"></div>
+
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="hd" id="hd">
+
+  <a class="logo" href="#top" aria-label="AKHI Furniture">
+    AKHI
+  </a>
+
+  <nav class="nv" id="nv" aria-label="Main navigation"></nav>
+
+  <div class="ic">
+
+    <button id="sb" aria-label="Search">
+      <svg viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="7"/>
+        <path d="M20 20l-4-4"/>
+      </svg>
+    </button>
+
+    <a id="bag"
+       href="#contact"
+       target="_blank"
+       rel="noopener"
+       aria-label="Enquire on WhatsApp">
+
+      <svg viewBox="0 0 24 24">
+        <path d="M3 4h2l2.4 11h10.2L20 7H6.2"/>
+        <circle cx="9" cy="19" r="1.4"/>
+        <circle cx="17" cy="19" r="1.4"/>
+      </svg>
+
+    </a>
+
+    <button class="mm" id="mm" aria-label="Open menu">
+
+      <svg viewBox="0 0 24 24">
+        <path d="M4 7h16M4 12h16M4 17h16"/>
+      </svg>
+
+    </button>
+
+  </div>
+
+</header>
+
+
+<!-- =========================================================
+     SEARCH
+========================================================= -->
+
+<div class="sp" id="sp">
+
+  <div class="search-inner">
+
+    <div class="search-top">
+
+      <span>Find your piece</span>
+
+      <button class="search-close" id="searchClose">
+        Close ×
+      </button>
+
+    </div>
+
+    <input
+      id="q"
+      type="search"
+      autocomplete="off"
+      placeholder="Search furniture…"
+      aria-label="Search furniture"
+    >
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main id="top">
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+  <div class="hero-bg" id="slides"></div>
+
+  <div class="hero-bottom">
+
+    <div class="hero-place">
+      Moulvibazar · Bangladesh
+    </div>
+
+    <div class="hero-counter">
+
+      <strong id="slideCurrent">01</strong>
+
+      <div class="hero-line">
+        <i id="slideProgress"></i>
+      </div>
+
+      <strong id="slideTotal">01</strong>
+
+    </div>
+
+  </div>
+
+  <div class="hero-scroll">
+    <i></i>
+    Scroll to explore
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     MARQUEE
+========================================================= -->
+
+<div class="marquee">
+
+  <div class="marquee-track">
+
+    <span>Furniture for real life</span>
+    <b></b>
+    <span>Thoughtfully selected</span>
+    <b></b>
+    <span>Homes · Offices · Workspaces</span>
+    <b></b>
+    <span>Furniture for real life</span>
+    <b></b>
+    <span>Thoughtfully selected</span>
+    <b></b>
+    <span>Homes · Offices · Workspaces</span>
+    <b></b>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     INTRO
+========================================================= -->
+
+<section class="intro reveal">
+
+  <div class="intro-inner">
+
+    <div class="intro-top">
+
+      <div class="intro-label">
+        The AKHI Philosophy
+      </div>
+
+      <div class="intro-index">
+        EST. · BANGLADESH
+      </div>
+
+    </div>
+
+    <h2>
+      Furniture that makes
+      <em>space feel complete.</em>
+    </h2>
+
+    <div class="intro-bottom">
+
+      <p>
+        We believe good furniture should do more than fill a room.
+        It should support the way you live, work, rest and connect —
+        with comfort, character and considered design.
+      </p>
+
+      <div class="intro-sign">
+        <i></i>
+        Comfort · Function · Character
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     SHOP
+========================================================= -->
+
+<section class="shop" id="shop">
+
+  <div class="wrap">
+
+    <div class="section-head reveal">
+
+      <div>
+
+        <div class="section-kicker">
+          Discover AKHI
+        </div>
+
+        <h2 class="section-title">
+          Pieces for
+          <em>every space.</em>
+        </h2>
+
+      </div>
+
+      <div class="section-description">
+        Explore furniture selected around the way you live,
+        work and experience your space.
+      </div>
+
+    </div>
+
+
+    <!-- CATEGORIES -->
+
+    <div class="categories reveal" id="cats"></div>
+
+
+    <!-- TOOLBAR -->
+
+    <div class="toolbar">
+
+      <div class="toolbar-left">
+
+        <span>Collection /</span>
+
+        <strong id="pt">
+          All products
+        </strong>
+
+      </div>
+
+      <div class="toolbar-right" id="rc">
+        Showing collection
+      </div>
+
+    </div>
+
+
+    <!-- PRODUCTS -->
+
+    <div class="products" id="grid"></div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     STATEMENT
+========================================================= -->
+
+<section class="statement reveal">
+
+  <div class="statement-inner">
+
+    <div>
+
+      <div class="statement-label">
+        Why AKHI
+      </div>
+
+    </div>
+
+    <div>
+
+      <h2>
+        Designed for
+        <em>real life.</em>
+        Made to feel right.
+      </h2>
+
+      <p class="statement-copy">
+        From productive workdays to slow mornings and quiet evenings,
+        AKHI brings comfort and considered design into the spaces
+        that matter most.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     EXPERIENCE
+========================================================= -->
+
+<section class="experience reveal">
+
+  <div class="experience-grid">
+
+    <div class="experience-item">
+
+      <div class="experience-number">01</div>
+
+      <div>
+
+        <h3>Thoughtful Selection</h3>
+
+        <p>
+          Furniture chosen with everyday comfort and function in mind.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="experience-item">
+
+      <div class="experience-number">02</div>
+
+      <div>
+
+        <h3>Modern Spaces</h3>
+
+        <p>
+          Pieces that work naturally across homes, offices and workspaces.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="experience-item">
+
+      <div class="experience-number">03</div>
+
+      <div>
+
+        <h3>Personal Enquiry</h3>
+
+        <p>
+          Tell us what you need and we'll help you find the right piece.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     CTA
+========================================================= -->
+
+<section class="cta reveal" id="contact">
+
+  <div class="cta-inner">
+
+    <div class="cta-label">
+      Let's create your space
+    </div>
+
+    <h2>
+      Looking for the
+      <br>
+      right furniture?
+    </h2>
+
+    <p>
+      Tell us what you need for your home or workspace.
+      Our team will help you find a piece that feels right.
+    </p>
+
+    <a
+      class="b"
+      id="ctaWa"
+      href="#contact"
+      target="_blank"
+      rel="noopener"
+    >
+      Talk to AKHI
+      <span>↗</span>
+    </a>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<!-- =========================================================
+     FLOATING CALL
+========================================================= -->
+
+<a class="call" id="call" href="#contact">
+
+  <svg viewBox="0 0 24 24">
+    <path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/>
+  </svg>
+
+  <span id="callN"></span>
+
+</a>
+
+
+<!-- =========================================================
+     WHATSAPP
+========================================================= -->
+
+<a
+  class="chat"
+  id="chat"
+  href="#contact"
+  target="_blank"
+  rel="noopener"
+  aria-label="Chat with AKHI on WhatsApp"
+>
+
+  <svg viewBox="0 0 24 24">
+    <path d="M4 4h16a1 1 0 011 1v11a1 1 0 01-1 1H9l-5 4V5a1 1 0 011-1z"/>
+  </svg>
+
+</a>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+  <div class="footer-grid">
+
+    <div class="footer-brand">
+
+      <div class="footer-logo">
+        AKHI
+      </div>
+
+      <p>
+        Office chairs, desks and furniture for beautiful homes,
+        comfortable offices and productive workspaces.
+      </p>
+
+    </div>
+
+
+    <div>
+
+      <h4>Explore</h4>
+
+      <ul id="fCats"></ul>
+
+    </div>
+
+
+    <div>
+
+      <h4>Contact</h4>
+
+      <ul id="fList"></ul>
+
+    </div>
+
+  </div>
+
+
+  <div class="footer-bottom">
+
+    <span id="foot">
+      © AKHI Furniture
+    </span>
+
+    <span>
+
+      <a
+        href="https://shahneilkhan.github.io/"
+        target="_blank"
+        rel="noopener"
+      >
+        Developer · SNK
+      </a>
+
+      &nbsp;·&nbsp;
+
+      <a href="./admin/login/">
+        Admin
+      </a>
+
+    </span>
+
+  </div>
+
+</footer>
+
+
+<!-- =========================================================
+     FIREBASE
+========================================================= -->
+
+<script src="./firebase-config.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+
+<script>
+(async()=>{
+
+"use strict";
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+const $=s=>document.querySelector(s);
+
+const $$=s=>[
+  ...document.querySelectorAll(s)
+];
+
+const esc=v=>String(v??'').replace(
+  /[&<>"']/g,
+  c=>({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#39;'
+  }[c])
+);
+
+const price=v=>{
+
+  if(v===undefined||v===null||v===''){
+    return '';
+  }
+
+  const n=Number(
+    String(v)
+      .replace(/[^\d.-]/g,'')
+  );
+
+  if(Number.isNaN(n)){
+    return String(v);
+  }
+
+  return '৳ '+n.toLocaleString('en-BD');
+
+};
+
+
+/* =========================================================
+   DEMO IMAGE SYSTEM
+========================================================= */
+
+const U=id=>
+  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1600&q=88`;
+
+const I={
+
+  sofa:'1618221195710-dd6b41faaea6',
+
+  living:'1555041469-a586c61ea9bc',
+
+  interior:'1616486338812-3dadae4b4ace',
+
+  bedroom:'1505693416388-ac5ce068fe85',
+
+  office:'1519710164239-da123dc03ef4',
+
+  chair:'1540574163026-643ea20ade25',
+
+  dining:'1598300042247-d088f8ab3a91'
+
+};
+
+
+/* =========================================================
+   DEMO PRODUCTS
+========================================================= */
+
+const DEMO=[
+
+  [
+    'Modern Sofa Set',
+    'Living Room',
+    45000,
+    'living'
+  ],
+
+  [
+    'Lounge Chair',
+    'Living Room',
+    12500,
+    'chair'
+  ],
+
+  [
+    'Living Room Set',
+    'Living Room',
+    68000,
+    'sofa'
+  ],
+
+  [
+    'Cozy Armchair',
+    'Living Room',
+    9800,
+    'interior'
+  ],
+
+  [
+    'Wooden Bed',
+    'Bedroom',
+    38000,
+    'bedroom'
+  ],
+
+  [
+    'Bedroom Set',
+    'Bedroom',
+    72000,
+    'bedroom'
+  ],
+
+  [
+    'Bedside Table',
+    'Bedroom',
+    6500,
+    'dining'
+  ],
+
+  [
+    'Dining Table Set',
+    'Dining',
+    52000,
+    'dining'
+  ],
+
+  [
+    'Dining Chair',
+    'Dining',
+    4800,
+    'chair'
+  ],
+
+  [
+    'Ergonomic Mesh Office Chair',
+    'Office',
+    6800,
+    'office'
+  ],
+
+  [
+    'Executive Office Desk',
+    'Office',
+    18500,
+    'office'
+  ],
+
+  [
+    'Visitor Chair',
+    'Office',
+    4300,
+    'chair'
+  ]
+
+].map((x,i)=>({
+
+  title:x[0],
+  category:x[1],
+  price:x[2],
+  image:x[3]?U(I[x[3]]):'',
+  order:i,
+  demo:1
+
+}));
+
+
+/* =========================================================
+   DEMO BANNERS
+========================================================= */
+
+const DEMOB=[
+
+  {
+    title:'Furniture for beautiful living.',
+    description:
+      'Comfort, character and a clean point of view for every room.',
+    image:U(I.living)
+  },
+
+  {
+    title:'Make your workspace feel right.',
+    description:
+      'Chairs and desks selected for productive, comfortable days.',
+    image:U(I.office)
+  },
+
+  {
+    title:'Rest in good design.',
+    description:
+      'Bedroom and dining furniture made for everyday moments.',
+    image:U(I.bedroom)
+  }
+
+];
+
+
+let S={};
+let H={};
+let P=[];
+let B=[];
+
+
+/* =========================================================
+   FIREBASE
+========================================================= */
+
+try{
+
+  const c=window.AKI_FIREBASE_CONFIG;
+
+  if(
+    !c ||
+    !c.apiKey ||
+    String(c.apiKey).startsWith('YOUR')
+  ){
+
+    throw new Error('Firebase config unavailable');
+
+  }
+
+  if(!firebase.apps.length){
+
+    firebase.initializeApp(c);
+
+  }
+
+  const db=firebase.firestore();
+
+
+  const ls=s=>
+
+    s.docs
+
+      .map(d=>({
+
+        id:d.id,
+        ...d.data()
+
+      }))
+
+      .filter(x=>x.published!==false)
+
+      .sort(
+        (a,b)=>
+          (a.order??999)-
+          (b.order??999)
+      );
+
+
+  const [
+
+    h,
+    s,
+    p,
+    b
+
+  ]=await Promise.all([
+
+    db
+      .collection('siteContent')
+      .doc('home')
+      .get(),
+
+    db
+      .collection('siteContent')
+      .doc('settings')
+      .get(),
+
+    db
+      .collection('projects')
+      .get(),
+
+    db
+      .collection('banners')
+      .get()
+
+  ]);
+
+
+  H=h.data()||{};
+  S=s.data()||{};
+  P=ls(p);
+  B=ls(b);
+
+
+}catch(e){
+
+  console.warn(
+    'AKHI demo mode:',
+    e
+  );
+
+}
+
+
+/* =========================================================
+   FALLBACK
+========================================================= */
+
+const demoMode=!P.length;
+
+if(demoMode){
+
+  P=DEMO;
+
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+let n=String(
+
+  S.whatsapp||
+  S.phone||
+  ''
+
+).replace(/\D/g,'');
+
+
+if(n.startsWith('0')){
+
+  n='880'+n.slice(1);
+
+}
+
+
+const wa=t=>
+
+  n
+
+    ?`https://wa.me/${n}?text=${encodeURIComponent(t)}`
+
+    :(S.email
+
+      ?`mailto:${S.email}?subject=${encodeURIComponent(t)}`
+
+      :'#contact'
+
+    );
+
+
+const hello=wa(
+  'Hello AKHI, I want to enquire about your furniture.'
+);
+
+
+$('#bag').href=hello;
+$('#chat').href=hello;
+$('#ctaWa').href=hello;
+
+
+if(S.phone){
+
+  $('#call').style.display='flex';
+
+  $('#callN').textContent=S.phone;
+
+  $('#call').href=
+    'tel:'+
+    S.phone.replace(/[^\d+]/g,'');
+
+}
+
+
+/* =========================================================
+   FOOTER DATA
+========================================================= */
+
+if(S.footer){
+
+  $('#foot').textContent=S.footer;
+
+}
+
+
+$('#fList').innerHTML=[
+
+  S.address,
+  S.phone,
+  S.email,
+  S.facebook
+
+]
+.filter(Boolean)
+.map(x=>`<li>${esc(x)}</li>`)
+.join('')
+
+||
+
+'<li>Moulvibazar, Bangladesh</li>';
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+const hd=$('#hd');
+
+function headerScroll(){
+
+  hd.classList.toggle(
+    'solid',
+    window.scrollY>60 ||
+    $('#nv').classList.contains('on')
+  );
+
+}
+
+addEventListener(
+  'scroll',
+  headerScroll,
+  {passive:true}
+);
+
+headerScroll();
+
+
+/* =========================================================
+   SCROLL PROGRESS
+========================================================= */
+
+function progress(){
+
+  const h=
+    document.documentElement.scrollHeight-
+    window.innerHeight;
+
+  const p=
+    h>0
+      ?window.scrollY/h*100
+      :0;
+
+  $('#progress').style.width=
+    `${p}%`;
+
+}
+
+addEventListener(
+  'scroll',
+  progress,
+  {passive:true}
+);
+
+progress();
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+const searchPanel=$('#sp');
+
+$('#sb').onclick=()=>{
+
+  searchPanel.classList.toggle('on');
+
+  if(searchPanel.classList.contains('on')){
+
+    setTimeout(
+      ()=>$('#q').focus(),
+      100
+    );
+
+  }
+
+};
+
+
+$('#searchClose').onclick=()=>{
+
+  searchPanel.classList.remove('on');
+
+};
+
+
+$('#mm').onclick=()=>{
+
+  $('#nv').classList.toggle('on');
+
+  headerScroll();
+
+};
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+const slides=
+
+  B.length
+
+    ?B
+
+    :demoMode
+
+      ?DEMOB
+
+      :[
+        {
+          title:
+            H.heroTitle||
+            'Furniture for comfortable living.',
+
+          description:
+            H.heroDescription||
+            'Furniture thoughtfully selected for modern homes and workspaces.',
+
+          image:
+            H.heroImage||
+            U(I.living)
+        }
+      ];
+
+
+$('#slides').innerHTML=
+
+slides.map((x,i)=>`
+
+  <article class="sl">
+
+    ${
+      x.image
+
+        ?`
+
+          <img
+            src="${esc(x.image)}"
+            alt="${esc(x.title||'AKHI Furniture')}"
+            ${i?'loading="lazy"':''}
+            onerror="this.style.display='none'"
+          >
+
+        `
+
+        :''
+    }
+
+
+    <div class="hero-content">
+
+      <div class="hero-kicker">
+        AKHI Furniture
+      </div>
+
+
+      <h1 class="hero-title">
+
+        ${esc(x.title||'Furniture, thoughtfully made.')}
+
+      </h1>
+
+
+      ${
+        x.description
+
+          ?`
+
+            <p class="hero-description">
+              ${esc(x.description)}
+            </p>
+
+          `
+
+          :''
+      }
+
+
+      <div class="hero-actions">
+
+        <a
+          class="b"
+          href="#shop"
+        >
+          Explore collection
+        </a>
+
+
+        <a
+          class="b ghost"
+          href="${esc(
+            wa(
+              'Hello AKHI, I want to know about your furniture collection.'
+            )
+          )}"
+          target="_blank"
+          rel="noopener"
+        >
+          Enquire now
+        </a>
+
+      </div>
+
+    </div>
+
+  </article>
+
+`).join('');
+
+
+const dotCount=slides.length;
+
+$('#slideTotal').textContent=
+  String(dotCount).padStart(2,'0');
+
+
+let current=0;
+
+
+function go(i){
+
+  current=
+    (i+dotCount)%dotCount;
+
+
+  $$('.sl').forEach(
+    (el,j)=>
+      el.classList.toggle(
+        'on',
+        j===current
+      )
+  );
+
+
+  $('#slideCurrent').textContent=
+    String(current+1).padStart(2,'0');
+
+
+  $('#slideProgress').style.width=
+    `${((current+1)/dotCount)*100}%`;
+
+}
+
+
+go(0);
+
+
+if(
+
+  dotCount>1 &&
+
+  !matchMedia(
+    '(prefers-reduced-motion:reduce)'
+  ).matches
+
+){
+
+  setInterval(
+    ()=>go(current+1),
+    6500
+  );
+
+}
+
+
+/* =========================================================
+   CATEGORIES
+========================================================= */
+
+const cats=[
+
+  ...new Set(
+
+    P
+      .map(x=>x.category)
+      .filter(Boolean)
+
+  )
+
+];
+
+
+let cat='All';
+let q='';
+
+
+/* NAV */
+
+$('#nv').innerHTML=`
+
+  <button data-c="All">
+    All products
+  </button>
+
+  ${
+    cats
+      .slice(0,7)
+      .map(
+        c=>
+          `<button data-c="${esc(c)}">${esc(c)}</button>`
+      )
+      .join('')
+  }
+
+  <a href="#contact">
+    Contact
+  </a>
+
+`;
+
+
+/* CATEGORY CARDS */
+
+const categoryImages={
+
+  'Living Room':I.living,
+  'Bedroom':I.bedroom,
+  'Office':I.office,
+  'Dining':I.dining
+
+};
+
+
+$('#cats').innerHTML=
+
+cats.map((c,i)=>{
+
+  const f=
+    P.find(
+      x=>
+        x.category===c &&
+        x.image
+    );
+
+
+  const image=
+    f?.image ||
+    (
+      categoryImages[c]
+        ?U(categoryImages[c])
+        :''
+    );
+
+
+  return `
+
+    <button
+      class="category"
+      data-c="${esc(c)}"
+      type="button"
+      aria-label="View ${esc(c)}"
+    >
+
+      <div class="category-media">
+
+        ${
+          image
+
+            ?`
+
+              <img
+                src="${esc(image)}"
+                alt="${esc(c)} furniture"
+                loading="lazy"
+                onerror="this.style.display='none'"
+              >
+
+            `
+
+            :''
+        }
+
+      </div>
+
+
+      <div class="category-content">
+
+        <span class="category-number">
+          ${String(i+1).padStart(2,'0')}
+        </span>
+
+        <h3>
+          ${esc(c)}
+        </h3>
+
+      </div>
+
+
+      <span class="category-arrow">
+        ↗
+      </span>
+
+    </button>
+
+  `;
+
+}).join('');
+
+
+/* =========================================================
+   FOOTER CATEGORIES
+========================================================= */
+
+$('#fCats').innerHTML=
+
+cats.map(c=>`
+
+  <li>
+
+    <a
+      href="#shop"
+      data-c="${esc(c)}"
+    >
+      ${esc(c)}
+    </a>
+
+  </li>
+
+`).join('');
+
+
+/* =========================================================
+   PRODUCT ICON
+========================================================= */
+
+const arrow=`
+
+<svg viewBox="0 0 24 24">
+
+  <path d="M5 12h13"/>
+  <path d="M13 6l6 6-6 6"/>
+
+</svg>
+
+`;
+
+
+/* =========================================================
+   DRAW PRODUCTS
+========================================================= */
+
+function draw(){
+
+  const list=
+
+    P.filter(x=>{
+
+      const matchesCategory=
+
+        cat==='All' ||
+        x.category===cat;
+
+
+      const text=
+
+        (
+
+          (x.title||'')+
+          ' '+
+          (x.description||'')+
+          ' '+
+          (x.category||'')
+
+        ).toLowerCase();
+
+
+      return(
+        matchesCategory &&
+        text.includes(q)
+      );
+
+    });
+
+
+  $('#pt').textContent=
+
+    cat==='All'
+      ?'All products'
+      :cat;
+
+
+  $('#rc').textContent=
+
+    `Showing ${list.length} of ${P.length} results`;
+
+
+  $('#grid').innerHTML=
+
+    list.map((x,i)=>`
+
+      <article class="product reveal">
+
+        <div class="product-media">
+
+          ${
+            x.demo
+
+              ?`
+
+                <span class="product-tag">
+                  Sample
+                </span>
+
+              `
+
+              :''
+          }
+
+
+          <span class="product-number">
+            ${String(i+1).padStart(2,'0')}
+          </span>
+
+
+          ${
+            x.image
+
+              ?`
+
+                <img
+                  src="${esc(x.image)}"
+                  alt="${esc(x.title)}"
+                  loading="lazy"
+                  onerror="this.style.display='none'"
+                >
+
+              `
+
+              :''
+          }
+
+        </div>
+
+
+        <div class="product-info">
+
+          ${
+            x.category
+
+              ?`
+
+                <div class="product-category">
+                  ${esc(x.category)}
+                </div>
+
+              `
+
+              :''
+          }
+
+
+          <h3>
+            ${esc(x.title)}
+          </h3>
+
+
+          ${
+            x.price
+
+              ?`
+
+                <div class="product-price">
+                  ${esc(price(x.price))}
+                </div>
+
+              `
+
+              :''
+          }
+
+
+          <div class="product-bottom">
+
+            <a
+              class="enquire"
+              href="${esc(
+                wa(
+                  'Hello AKHI, I want to know about: '+
+                  x.title
+                )
+              )}"
+              target="_blank"
+              rel="noopener"
+            >
+
+              Enquire
+
+              ${arrow}
+
+            </a>
+
+          </div>
+
+        </div>
+
+      </article>
+
+    `).join('')
+
+    ||
+
+    `
+
+      <div class="empty">
+
+        No products match your search.
+
+      </div>
+
+    `;
+
+
+  requestAnimationFrame(
+    observeReveals
+  );
+
+}
+
+
+/* =========================================================
+   CATEGORY CLICK
+========================================================= */
+
+document.addEventListener(
+  'click',
+  e=>{
+
+    const target=
+      e.target.closest('[data-c]');
+
+    if(!target)return;
+
+
+    cat=
+      target.dataset.c;
+
+
+    $('#nv')
+      .classList
+      .remove('on');
+
+
+    draw();
+
+    headerScroll();
+
+
+    $('#shop').scrollIntoView({
+
+      behavior:
+        matchMedia(
+          '(prefers-reduced-motion:reduce)'
+        ).matches
+          ?'auto'
+          :'smooth'
+
+    });
+
+  }
+);
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+$('#q').oninput=e=>{
+
+  q=
+    e.target.value
+      .trim()
+      .toLowerCase();
+
+
+  draw();
+
+
+  if(q){
+
+    $('#shop').scrollIntoView({
+
+      behavior:
+        matchMedia(
+          '(prefers-reduced-motion:reduce)'
+        ).matches
+          ?'auto'
+          :'smooth'
+
+    });
+
+  }
+
+};
+
+
+/* =========================================================
+   REVEAL ENGINE
+========================================================= */
+
+let revealObserver;
+
+
+function observeReveals(){
+
+  const items=
+    document.querySelectorAll(
+      '.reveal:not(.visible)'
+    );
+
+
+  if(
+    !('IntersectionObserver' in window)
+  ){
+
+    items.forEach(
+      x=>
+        x.classList.add('visible')
+    );
+
+    return;
+
+  }
+
+
+  if(!revealObserver){
+
+    revealObserver=
+      new IntersectionObserver(
+
+        entries=>{
+
+          entries.forEach(entry=>{
+
+            if(entry.isIntersecting){
+
+              entry.target
+                .classList
+                .add('visible');
+
+
+              revealObserver
+                .unobserve(
+                  entry.target
+                );
+
+            }
+
+          });
+
+        },
+
+        {
+          threshold:.08,
+          rootMargin:'0px 0px -50px'
+        }
+
+      );
+
+  }
+
+
+  items.forEach(
+    x=>
+      revealObserver.observe(x)
+  );
+
+}
+
+
+draw();
+observeReveals();
+
+
+/* =========================================================
+   CURSOR
+========================================================= */
+
+const dot=$('#cursorDot');
+const ring=$('#cursorRing');
+
+let mx=0;
+let my=0;
+let rx=0;
+let ry=0;
+
+
+if(
+  matchMedia('(pointer:fine)').matches
+){
+
+  addEventListener(
+    'mousemove',
+    e=>{
+
+      mx=e.clientX;
+      my=e.clientY;
+
+      dot.style.opacity='1';
+      ring.style.opacity='1';
+
+      dot.style.left=mx+'px';
+      dot.style.top=my+'px';
+
+    },
+    {passive:true}
+  );
+
+
+  function cursorLoop(){
+
+    rx+=(mx-rx)*.16;
+    ry+=(my-ry)*.16;
+
+    ring.style.left=rx+'px';
+    ring.style.top=ry+'px';
+
+    requestAnimationFrame(
+      cursorLoop
+    );
+
+  }
+
+  cursorLoop();
+
+
+  document.addEventListener(
+    'mouseover',
+    e=>{
+
+      if(
+        e.target.closest(
+          'a,button,.product,.category'
+        )
+      ){
+
+        ring.classList.add('big');
+
+      }else{
+
+        ring.classList.remove('big');
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+document.addEventListener(
+  'keydown',
+  e=>{
+
+    if(e.key==='Escape'){
+
+      searchPanel.classList.remove('on');
+
+      $('#nv')
+        .classList
+        .remove('on');
+
+      headerScroll();
+
+    }
+
+
+    if(
+      e.key==='/' &&
+      document.activeElement.tagName!=='INPUT'
+    ){
+
+      e.preventDefault();
+
+      searchPanel.classList.add('on');
+
+      setTimeout(
+        ()=>$('#q').focus(),
+        80
+      );
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+const loader=$('#loader');
+
+
+setTimeout(
+  ()=>{
+    loader.classList.add('done');
+  },
+  900
+);
+
+
+})();
+</script>
+
+</body>
+</html>
